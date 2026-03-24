@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SharkTank 2.0 | Mamba Digital</title>
+    <title>SHARKTANK MAMBA</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,7 +21,7 @@
     
     <style>
         /* ========================================================
-           IDENTIDADE VISUAL: DARK ELITE (MAMBA DESIGN ARCHITECT)
+           IDENTIDADE VISUAL: DARK ELITE (SHARKTANK MAMBA)
            ======================================================== */
         
         :root {
@@ -119,12 +119,12 @@
             <div>
                 <h1 class="montserrat text-2xl tracking-tight text-white uppercase flex items-center gap-3">
                     <span class="w-3 h-3 rounded-full bg-mamba-blue animate-pulse glow-blue"></span>
-                    SharkTank 2.0
+                    SHARKTANK MAMBA
                 </h1>
-                <p class="text-xs text-mamba-sec mt-1 uppercase tracking-widest font-semibold ml-6">Elite Dashboard Simulator</p>
+                <p class="text-xs text-mamba-sec mt-1 uppercase tracking-widest font-semibold ml-6">Simulador de Pitch para Sellers</p>
             </div>
             <div class="mt-4 sm:mt-0 text-sm font-semibold px-4 py-2 rounded-lg bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.05)] text-mamba-sec">
-                MAMBA DIGITAL ARCHITECTURE
+                PAINEL DE DIAGNÓSTICO
             </div>
         </div>
     </header>
@@ -138,11 +138,11 @@
             <div class="glass-panel p-6 lg:col-span-7 flex flex-col shadow-2xl">
                 <div class="flex items-center gap-3 mb-6 border-b border-[rgba(255,255,255,0.1)] pb-4">
                     <div class="w-8 h-8 rounded-lg bg-[#2563eb] text-white flex items-center justify-center font-bold font-montserrat shadow-[0_0_15px_rgba(37,99,235,0.5)]">1</div>
-                    <h2 class="montserrat text-lg uppercase tracking-wide text-white">Telemetria da Conta Real</h2>
+                    <h2 class="montserrat text-lg uppercase tracking-wide text-white">Métricas da Conta Mercado Livre</h2>
                 </div>
                 
                 <p class="text-sm text-mamba-sec mb-4 font-light">
-                    Dados coletados: Receita <span class="text-mamba-pink font-semibold">-33,6%</span> | Ticket <span class="text-mamba-pink font-semibold">-31%</span> | Recompra <span class="text-mamba-purple font-semibold">13%</span>
+                    Dados base: Receita <span class="text-mamba-pink font-semibold">-33,6%</span> | Ticket <span class="text-mamba-pink font-semibold">-31%</span> | Recompra <span class="text-mamba-purple font-semibold">13%</span>
                 </p>
                 
                 <!-- Galeria de Imagens com Scroll -->
@@ -175,12 +175,12 @@
                 <div>
                     <div class="flex items-center gap-3 mb-6 border-b border-[rgba(255,255,255,0.1)] pb-4">
                         <div class="w-8 h-8 rounded-lg bg-[#7c3aed] text-white flex items-center justify-center font-bold font-montserrat shadow-[0_0_15px_rgba(124,58,237,0.5)]">2</div>
-                        <h2 class="montserrat text-lg uppercase tracking-wide text-white">Parâmetros de Diagnóstico</h2>
+                        <h2 class="montserrat text-lg uppercase tracking-wide text-white">Parâmetros do Seller</h2>
                     </div>
                     
                     <div class="space-y-6">
                         <div class="group">
-                            <label for="select-nicho" class="block text-xs uppercase tracking-widest font-semibold text-mamba-sec mb-2 group-focus-within:text-mamba-purple transition-colors">Vertical de Negócio</label>
+                            <label for="select-nicho" class="block text-xs uppercase tracking-widest font-semibold text-mamba-sec mb-2 group-focus-within:text-mamba-purple transition-colors">Nicho da Conta</label>
                             <select id="select-nicho" class="block w-full px-4 py-4 rounded-xl text-sm font-medium transition-all">
                                 <option value="">[ SELECIONE O NICHO DE ATUAÇÃO ]</option>
                                 <option value="Casa e Decoração">Casa e Decoração</option>
@@ -193,19 +193,19 @@
                         </div>
 
                         <div class="group">
-                            <label for="scenario-select" class="block text-xs uppercase tracking-widest font-semibold text-mamba-sec mb-2 group-focus-within:text-mamba-blue transition-colors">Hipótese da Anomalia (Root Cause)</label>
+                            <label for="scenario-select" class="block text-xs uppercase tracking-widest font-semibold text-mamba-sec mb-2 group-focus-within:text-mamba-blue transition-colors">Motivo Central da Queda</label>
                             <select id="scenario-select" class="block w-full px-4 py-4 rounded-xl text-sm font-medium transition-all">
-                                <option value="">[ DEFINA A CAUSA RAIZ DA QUEDA ]</option>
+                                <option value="">[ DEFINA A CAUSA RAIZ ]</option>
                                 <option value="1">Subutilização de Ads (Corte de verba no High Ticket)</option>
                                 <option value="2">Perda de Selo (Derrubou tráfego, forçou baixa de preço)</option>
                                 <option value="3">Ruptura do Produto Herói (Sobrou apenas produto barato)</option>
                                 <option value="4">Ambição de Dobrar (Foco errado em novos vs recompra)</option>
                                 <option value="5">Sazonalidade (Fim da temporada do High Ticket)</option>
-                                <option value="6">Margem Destruída por Falta de Tráfego Orgânico</option>
+                                <option value="6">Margem Destruída (Guerra de preços para segurar posições)</option>
                                 <option value="7">Platô de Crescimento (O ciclo de vida do produto caiu)</option>
-                                <option value="8">Vício em Queima de Preço (O desespero pelo BuyBox)</option>
+                                <option value="8">Vício no BuyBox (Luta destrutiva por centavos no catálogo)</option>
                                 <option value="9">Full Subutilizado (Enviou apenas o ticket baixo pro CD)</option>
-                                <option value="10">Gargalo Produtivo (Pausou os itens caros/premium)</option>
+                                <option value="10">Gargalo Produtivo (Pausou os itens caros por falta de estoque)</option>
                             </select>
                         </div>
                     </div>
@@ -213,7 +213,7 @@
 
                 <div class="mt-10">
                     <button id="btn-generate" class="w-full bg-[#2563eb] hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 glow-blue montserrat uppercase tracking-wider text-sm flex items-center justify-center gap-2">
-                        <span>Compilar Arquitetura de Pitch</span>
+                        <span>Gerar Diagnóstico da Conta</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     </button>
                     <!-- MENSAGEM DE ERRO -->
@@ -236,7 +236,7 @@
                     <div>
                         <div class="flex items-center gap-3 mb-2">
                             <span id="badge-nicho" class="inline-block bg-[rgba(124,58,237,0.15)] border border-[#7c3aed] text-[#7c3aed] text-[10px] px-3 py-1 rounded-md uppercase tracking-widest font-bold"></span>
-                            <span class="inline-block bg-[rgba(255,255,255,0.05)] text-mamba-sec text-[10px] px-3 py-1 rounded-md uppercase tracking-widest font-bold">Relatório Gerencial</span>
+                            <span class="inline-block bg-[rgba(255,255,255,0.05)] text-mamba-sec text-[10px] px-3 py-1 rounded-md uppercase tracking-widest font-bold">Diagnóstico Gerado</span>
                         </div>
                         <h3 class="montserrat text-2xl md:text-3xl font-black text-white" id="briefing-title"></h3>
                     </div>
@@ -263,23 +263,13 @@
                         <!-- Charts injectados aqui -->
                     </div>
 
-                    <!-- Diagnóstico Estrutural -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="glass-panel bg-[rgba(255,77,141,0.03)] p-6 border-[rgba(255,77,141,0.2)]">
-                            <h4 class="montserrat text-sm uppercase tracking-widest text-[#ff4d8d] mb-4 flex items-center gap-2 font-bold">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                                Vulnerabilidade Detectada
-                            </h4>
-                            <p id="briefing-problem" class="text-gray-300 leading-relaxed text-sm font-light"></p>
-                        </div>
-
-                        <div class="glass-panel bg-[rgba(37,99,235,0.03)] p-6 border-[rgba(37,99,235,0.2)]">
-                            <h4 class="montserrat text-sm uppercase tracking-widest text-[#2563eb] mb-4 flex items-center gap-2 font-bold">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                                Solução Mamba Architecture
-                            </h4>
-                            <p id="briefing-challenge" class="text-gray-300 leading-relaxed text-sm font-light"></p>
-                        </div>
+                    <!-- Diagnóstico Descritivo Profundo -->
+                    <div class="glass-panel bg-[rgba(255,77,141,0.03)] p-6 sm:p-8 border-[rgba(255,77,141,0.2)]">
+                        <h4 class="montserrat text-lg uppercase tracking-widest text-[#ff4d8d] mb-6 flex items-center gap-2 font-bold border-b border-[rgba(255,77,141,0.2)] pb-4">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            O Que Aconteceu Com a Conta? (Análise Detalhada)
+                        </h4>
+                        <div id="briefing-problem" class="text-gray-200 leading-relaxed text-base font-light"></div>
                     </div>
 
                 </div>
@@ -289,12 +279,12 @@
     
     <footer class="border-t border-[rgba(255,255,255,0.05)] mt-12 py-8 bg-[rgba(0,0,0,0.5)]">
         <div class="container mx-auto px-6 text-center text-xs text-mamba-sec font-semibold uppercase tracking-widest">
-            <p>&copy; 2026 Mamba Digital Architecture. Confidencial.</p>
+            <p>&copy; 2026 SHARKTANK MAMBA. Ferramenta de Análise Interna.</p>
         </div>
     </footer>
 
     <script>
-    // Paleta Centralizada HEX para Charts e PDF (Identidade Dark Elite)
+    // Paleta Centralizada HEX para Charts e PDF
     const eliteColors = {
         dark: '#050505',
         glass: '#111111',
@@ -309,43 +299,43 @@
     let activeCharts = {};
     let currentScenarioData = null;
 
-    // Vocabulário dinâmico baseado no nicho
+    // Vocabulário dinâmico baseado no nicho (Linguagem voltada pro Lojista e ML)
     const nicheContexts = {
         'Casa e Decoração': {
-            prodHigh: 'jogos de cama premium e móveis',
-            prodLow: 'pequenos itens decorativos e almofadas',
-            sazonal: 'tapetes pesados e cobertores térmicos',
-            termo: 'decoração',
+            prodHigh: 'jogos de cama premium e móveis maiores',
+            prodLow: 'pequenos itens decorativos e almofadas avulsas',
+            sazonal: 'cobertores térmicos e edredons grossos',
+            termo: 'artigos de decoração',
         },
         'Eletrônicos': {
-            prodHigh: 'smartwatches e fones de alto padrão',
-            prodLow: 'cabos USB e cases para celular',
-            sazonal: 'caixas de som potentes (verão)',
-            termo: 'eletrônicos e gadgets',
+            prodHigh: 'smartwatches de alto padrão e fones originais',
+            prodLow: 'cabos USB, películas e capinhas',
+            sazonal: 'caixas de som potentes à prova d\'água',
+            termo: 'eletrônicos e acessórios',
         },
         'Moda': {
-            prodHigh: 'jaquetas de couro e vestidos de festa',
-            prodLow: 'camisetas básicas e meias',
-            sazonal: 'coleção de moda praia/biquínis',
+            prodHigh: 'jaquetas de couro pesadas e vestidos de festa',
+            prodLow: 'camisetas básicas de algodão e meias',
+            sazonal: 'coleção de moda praia e biquínis',
             termo: 'peças de vestuário',
         },
         'Pet': {
-            prodHigh: 'arranhadores gigantes e ração super premium',
-            prodLow: 'tapetes higiênicos e brinquedos simples',
-            sazonal: 'caminhas aquecidas de inverno',
-            termo: 'suprimentos pet',
+            prodHigh: 'arranhadores gigantes e sacos de ração super premium',
+            prodLow: 'tapetes higiênicos e brinquedinhos de borracha',
+            sazonal: 'caminhas aquecidas e roupinhas de inverno',
+            termo: 'suprimentos para pets',
         },
         'Beleza e Cuidado Pessoal': {
             prodHigh: 'kits completos de skincare avançado',
-            prodLow: 'sabonetes unitários e esponjas',
-            sazonal: 'kits de protetor solar e bronzeador',
+            prodLow: 'sabonetes unitários e esponjas de maquiagem',
+            sazonal: 'kits de protetor solar e bronzeadores',
             termo: 'cosméticos',
         },
         'Autopeças': {
-            prodHigh: 'kits completos de embreagem e multimídia',
-            prodLow: 'lâmpadas, aditivos e filtros',
-            sazonal: 'bagageiros de teto para férias',
-            termo: 'reposição automotiva',
+            prodHigh: 'kits completos de embreagem e centrais multimídia',
+            prodLow: 'lâmpadas, aditivos e filtros de óleo',
+            sazonal: 'bagageiros de teto para viagens de férias',
+            termo: 'peças de reposição automotiva',
         }
     };
 
@@ -371,136 +361,125 @@
             summary: '',
             kpis: [],
             charts: [],
-            problem: '',
-            challenge: ''
+            problem: ''
         };
 
         // Kpis base
         const defaultKpis = [
-            { label: 'Receita Operacional', value: dadosConta.faturamento, class: 'text-mamba-text-main glow-null border-l-2 border-l-gray-500' },
-            { label: 'Desvio de Receita', value: dadosConta.quedaFaturamento, class: 'text-mamba-pink glow-pink' },
-            { label: 'Variação Ticket Médio', value: dadosConta.quedaTicket, class: 'text-mamba-pink glow-pink' },
-            { label: 'Índice de Retenção', value: dadosConta.recompra, class: 'text-mamba-purple glow-purple' }
+            { label: 'Faturamento Atual', value: dadosConta.faturamento, class: 'text-mamba-text-main glow-null border-l-2 border-l-gray-500' },
+            { label: 'Queda de Receita', value: dadosConta.quedaFaturamento, class: 'text-mamba-pink glow-pink' },
+            { label: 'Queda no Ticket Médio', value: dadosConta.quedaTicket, class: 'text-mamba-pink glow-pink' },
+            { label: 'Taxa de Recompra', value: dadosConta.recompra, class: 'text-mamba-purple glow-purple' }
         ];
 
         switch (scenarioId) {
             case '1':
-                scenario.title = 'Ads Desligado no High Ticket';
-                scenario.summary = `Telemetria revela que a conta faturou ${dadosConta.faturamento}, registrando um recuo de 33,6% na receita. A causa matriz não foi conversão (que escalou para 1,4%), mas o corte de investimento em Ads para a linha premium de ${nicheName}.`;
-                scenario.problem = `O lojista cortou o orçamento do Product Ads para itens de alto valor agregado (${ctx.prodHigh}), reduzindo as visitas topo de funil em 14,1%. A conversão em volume (-2,4%) foi sustentada pelos itens de entrada (${ctx.prodLow}), o que afundou o Ticket Médio em 31% (para R$ 304), destruindo o volume financeiro bruto.`;
-                scenario.challenge = `Reativar o tráfego de alta intenção com foco total na recuperação de Ticket. O Heatmap mapeia segundas (12h-18h) como o pico absoluto de conversão. Injetaremos o budget do Product Ads do High Ticket nesta janela exata, além de automatizar retargeting focado nos 7.527 novos usuários adquiridos no mês.`;
+                scenario.title = 'O Corte Fatal no Product Ads';
+                scenario.summary = `As métricas ilustram um cenário clássico no Mercado Livre: o lojista tentou economizar na hora errada. A conta faturou expressivos ${dadosConta.faturamento}, mas na verdade está sofrendo uma queda amarga de 33,6% na receita. A conversão da loja continuou boa (1,4%), indicando que o problema foi o corte no investimento em visibilidade dos produtos que trazem dinheiro para casa.`;
+                scenario.problem = `Assustado com os custos das campanhas, o vendedor pausou o Product Ads justamente dos itens de maior valor, como **${ctx.prodHigh}**. Sem publicidade, o algoritmo do Mercado Livre parou de recomendar esses anúncios caros e as visitas orgânicas e pagas da loja caíram em 14,1%.\n\nO que salvou a conta de não zerar as vendas foram os produtos de giro rápido e baratos, como **${ctx.prodLow}**, que costumam vender sozinhos e seguraram a quantidade de pacotes enviados (que teve uma queda leve de apenas -2,4%).\n\nPorém, vender milhares de produtos baratos cobrou seu preço: o Ticket Médio da loja despencou impressionantes 31%, caindo para apenas R$ 304. O lojista manteve a operação trabalhando duro para embalar mais de 11 mil caixas no mês, mas a margem e o faturamento bruto derreteram, provando que desligar Ads de produto premium destrói a receita do negócio.`;
                 scenario.kpis = defaultKpis;
                 scenario.charts = [{
-                    type: 'bar', id: 'c1', title: 'Impacto do Corte Ads: Ticket vs Volume Demanda',
-                    data: { labels: ['Retração de Ticket Médio', 'Retração de Volume Bruto'], datasets: [{ label: 'Variação %', data: [-31, -2.4], backgroundColor: [eliteColors.pink, eliteColors.blue] }] }
+                    type: 'bar', id: 'c1', title: 'Impacto do Corte de Ads no Perfil de Vendas',
+                    data: { labels: ['Queda no Ticket (Sem item caro)', 'Volume de Vendas (Item barato)'], datasets: [{ label: 'Variação %', data: [-31, -2.4], backgroundColor: [eliteColors.pink, eliteColors.blue] }] }
                 }];
                 break;
 
             case '2':
-                scenario.title = 'Colapso Logístico e Quebra de Preço';
-                scenario.summary = `Operação de ${nicheName} em estado crítico de sangria (Receita: ${dadosConta.faturamento} | -33,6%). A queda vertiginosa não reflete sazonalidade, mas sim as consequências em cascata de uma perda recente do selo MercadoLíder.`;
-                scenario.problem = `A remoção do selo cortou a indexação orgânica, retraindo visitas em 14,1%. Para não estagnar o galpão, a diretoria esmagou o próprio markup em 31% (Ticket atual: R$ 304,33). Essa manobra suicida preservou a saída de caixas (-2,4% vol.), mas desintegrou a rentabilidade geral de ${ctx.termo}.`;
-                scenario.challenge = `Estancar a erosão da margem e blindar o fluxo logístico. Aplicaremos campanhas exclusivas na base de clientes frequentes (13%) ofertando bundles (${ctx.prodLow} + ${ctx.prodHigh}) para restaurar o Ticket Médio imediato. Estruturaremos também o escoamento logístico focado nas segundas-feiras, isolando o gargalo operacional visto no mapa de calor.`;
+                scenario.title = 'A Reputação Amarela e o Pânico no Preço';
+                scenario.summary = `O painel de vendas revela uma conta que entrou em colapso logístico. O recuo brutal de 33,6% no faturamento não é sazonalidade, mas sim o resultado de punições do algoritmo. O vendedor não aguentou o volume de envios das segundas-feiras e atrasou centenas de pacotes, perdendo o selo MercadoLíder.`;
+                scenario.problem = `Ao perder a cor verde e o selo de MercadoLíder, o choque foi instantâneo: o algoritmo do Mercado Livre removeu o destaque de quase todos os anúncios de **${ctx.termo}**, causando uma queda imediata de 14,1% no tráfego da conta.\n\nEntrando em pânico para não ficar com o galpão abarrotado de produtos (desde **${ctx.prodLow}** até os **${ctx.prodHigh}**), o lojista ativou promoções loucas e reduziu os preços de forma agressiva para forçar as vendas a acontecerem mesmo sem ranqueamento.\n\nA manobra desesperada funcionou para uma coisa: segurou a quantidade de caixas saindo do galpão (apenas -2,4% de queda em volume). Mas o custo disso foi fatal: o Ticket Médio despencou 31%, caindo para R$ 304,33. A conta agora trabalha num ritmo alucinante vendendo muito barato, o que fez o faturamento global encolher absurdamente, corroendo todo o lucro.`;
                 scenario.kpis = defaultKpis;
                 scenario.charts = [{
-                    type: 'line', id: 'c2', title: 'Degradação Acelerada do Ticket Médio',
-                    data: { labels: ['Semana -3', 'Semana -2', 'Evento (Perda Selo)', 'Momento Atual'], datasets: [{ label: 'Preço Praticado (R$)', data: [441, 435, 340, 304], borderColor: eliteColors.pink, tension: 0.3 }] }
+                    type: 'line', id: 'c2', title: 'Queda do Preço Praticado Para Salvar Volume',
+                    data: { labels: ['Semana 1', 'Semana 2', 'Semana 3 (Perdeu Selo)', 'Semana 4 (Desespero)'], datasets: [{ label: 'Evolução do Ticket (R$)', data: [441, 435, 340, 304], borderColor: eliteColors.pink, tension: 0.3 }] }
                 }];
                 break;
 
             case '3':
-                scenario.title = 'Ruptura da Curva A (Dependência)';
-                scenario.summary = `As métricas ilustram o sintoma clássico do 'Lojista Refém' em ${nicheName}. O faturamento regrediu severos 33,6% (R$ 3.8M), causado puramente pelo desabastecimento da SKU matriz de alto ticket.`;
-                scenario.problem = `O principal ${ctx.prodHigh} da loja sofreu ruptura de estoque. Sem o "Herói", os anúncios pausaram, eliminando 14,1% do tráfego. O algoritmo de recomendação desviou os usuários para os itens secundários (${ctx.prodLow}). A base comprou (queda de só -2,4% em vol.), mas o Ticket colapsou (-31%).`;
-                scenario.challenge = `Pivotagem arquitetural do catálogo. Com uma conversão residual alta (1,4%), utilizaremos táticas de multi-compra (Leve 3, Pague 2) na Curva B de ${ctx.termo} para mimetizar o faturamento perdido. Paralelamente, estrutura-se um plano preditivo de ressuprimento para blindar o SKU matriz contra quebras futuras.`;
+                scenario.title = 'A Queda do Produto Herói';
+                scenario.summary = `Os dados mostram a fragilidade de uma loja que dependia de um único sucesso. O faturamento despencou 33,6%, fechando em ${dadosConta.faturamento}, porque a conta sofreu uma ruptura de estoque no produto que sustentava as finanças da empresa. A loja hoje sobrevive vendendo as "sobras" do catálogo.`;
+                scenario.problem = `O anúncio principal da loja, que trazia clientes dispostos a comprar **${ctx.prodHigh}**, pausou automaticamente porque o lojista ficou sem estoque. Ao perder o seu maior chamariz, a conta perdeu 14,1% das suas visitas.\n\nComo o Mercado Livre precisa continuar indicando algo daquela loja, o tráfego que sobrou foi desviado para os produtos secundários e bem mais baratos, como **${ctx.prodLow}**. A audiência continuou comprando (a taxa de conversão continuou boa em 1,4%, e o volume de vendas caiu muito pouco, apenas -2,4%).\n\nMas aí reside o problema matemático: ao substituir a venda de itens caros pela venda de itens de entrada, o Ticket Médio da loja colapsou. A queda de 31% no valor de cada pedido gerou esse buraco de quase um terço do faturamento, deixando a operação perigosamente dependente de vender itens baratos.`;
                 scenario.kpis = defaultKpis;
                 scenario.charts = [{
-                    type: 'doughnut', id: 'c3', title: 'Diluição do Mix de Produtos',
-                    data: { labels: ['Demanda do Herói (Desabastecido)', 'Curva B (Sustentação)'], datasets: [{ data: [31, 69], backgroundColor: ['#333333', eliteColors.purple] }] }
+                    type: 'doughnut', id: 'c3', title: 'Como a Ruptura Mudou o Mix Vendido',
+                    data: { labels: ['Vendas Perdidas do Item Caro', 'Vendas Atuais de Itens Baratos'], datasets: [{ data: [31, 69], backgroundColor: ['#333333', eliteColors.purple] }] }
                 }];
                 break;
 
             case '4':
-                scenario.title = 'Falha no Custo de Aquisição (CAC)';
-                scenario.summary = `Operação madura em ${nicheName} gerando R$ 3.8M, porém em retração financeira de 33,6%. O board busca escala puramente por novos clientes, ignorando a falha arquitetural de retenção (LTV).`;
-                scenario.problem = `A injeção de Ads focou exclusivamente na venda do item de entrada (${ctx.prodLow}), trazendo 7.527 novos compradores. Porém, sem o funil de Up-Sell, o Ticket cedeu 31%. O "balde furado" é evidente: a taxa de recompra agoniza em parcos 13%. Volume existe, margem residual e LTV são nulos.`;
-                scenario.challenge = `Arquitetar ecossistema de retenção. Executaremos fluxos automatizados no Mercado Shops e Cupons diretos focados nos +7k leads gerados. O tráfego pago da segunda-feira à tarde (Peak Time) será reorientado 100% para os itens premium, reconstruindo o Ticket Médio sem onerar a aquisição.`;
+                scenario.title = 'O Foco Errado em Compradores Novos';
+                scenario.summary = `Observamos aqui uma conta faturando pesados ${dadosConta.faturamento}, mas que sofreu um recuo de 33,6% na receita porque o vendedor tentou "comprar o mercado" da forma errada. Ele colocou todas as fichas em atrair gente nova vendendo barato, mas o balde da conta está totalmente furado na retenção.`;
+                scenario.problem = `O lojista colocou os produtos de entrada, como **${ctx.prodLow}**, com preços agressivos e investiu forte para atrair novos cliques. Isso trouxe impressionantes 7.527 clientes novos para a base. Porém, a taxa de recompra continua travada em míseros 13%. O vendedor não consegue fazer esses milhares de novos clientes voltarem para comprar os **${ctx.prodHigh}**, que é onde está a verdadeira margem.\n\nComo ele focou a loja inteira em vender o produto de "isca", o volume total de vendas em unidades nem sentiu o tranco (queda de só -2,4%). Só que, sem vender os produtos premium do portfólio, o Ticket Médio da loja derreteu 31%, caindo para a faixa dos 300 reais.\n\nEle está trabalhando exaustivamente para embalar mais de 11 mil pedidos mensais, mas faturando cada vez menos, provando que no Mercado Livre não adianta só trazer novos compradores se você os acostuma com preços baixos e não tem estratégia de fidelização.`;
                 scenario.kpis = defaultKpis;
                 scenario.charts = [{
-                    type: 'doughnut', id: 'c4', title: 'Fenda de Retenção (LTV)',
-                    data: { labels: ['New Users (Altíssimo Fricção)', 'Returning (Baixo Aproveitamento)'], datasets: [{ data: [87, 13], backgroundColor: [eliteColors.blue, eliteColors.purple] }] }
+                    type: 'doughnut', id: 'c4', title: 'O Balde Furado de Retenção',
+                    data: { labels: ['Compradores de 1ª Viagem', 'Compradores que Voltam (Recompra)'], datasets: [{ data: [87, 13], backgroundColor: [eliteColors.blue, eliteColors.purple] }] }
                 }];
                 break;
 
             case '5':
-                scenario.title = 'Vale Sazonal e Estoque Comoditizado';
-                scenario.summary = `Os data points atestam a violenta descompressão de temporada em ${nicheName}. O recuo de 33,6% na receita acompanha o esgotamento do ciclo orgânico sazonal, demandando intervenção tática no catálogo periférico.`;
-                scenario.problem = `Itens de alto ticket (${ctx.sazonal}) perderam demanda primária, suprimindo as buscas em 14,1%. A demanda remanescente fluiu para o portfólio de acessórios (${ctx.prodLow}). A conversão segue firme em 1,4%, indicando que a loja tem tráfego, porém o desabamento do ticket (-31%) sangra o resultado geral.`;
-                scenario.challenge = `Neutralizar a volatilidade sazonal. Estruturaremos "Kits de Transição", empacotando produtos perenes para sustentar o ticket acima de R$ 400. Injeção de Product Ads será cirúrgica no pico do Heatmap (Seg/Ter) para tracionar produtos de contraciclo na base já existente.`;
+                scenario.title = 'Fim da Temporada: O Estoque Sazonal Travou';
+                scenario.summary = `O painel entrega o comportamento de uma conta que é muito dependente do clima ou da época do ano. O baque de 33,6% no faturamento ocorreu simplesmente porque a janela quente de vendas do produto mais caro se fechou, e o lojista não preparou um plano B no seu catálogo.`;
+                scenario.problem = `Com a mudança da estação ou o fim da data comemorativa, os clientes pararam de buscar ativamente por **${ctx.sazonal}**, que era a estrela de alto valor da loja. Com isso, as visitas gerais caíram em 14,1%.\n\nQuem continua entrando na loja hoje está lá para comprar os itens de necessidade contínua, que são muito mais baratos (como **${ctx.prodLow}**). A conversão é ótima (1,4%) porque quem clica nesses itens básicos realmente precisa deles, mantendo o ritmo de caixas despachadas no Full praticamente inalterado (-2,4% de queda de volume).\n\nA matemática, porém, é impiedosa. Sem faturar os pedidos caros da alta temporada, o Ticket Médio do mês afundou drasticamente 31% para R$ 304, puxando quase um terço do faturamento global da empresa para o ralo. A operação ficou pesada de manter com vendas pequenas.`;
                 scenario.kpis = defaultKpis;
                 scenario.charts = [{
-                    type: 'bar', id: 'c5', title: 'Efeito Sazonalidade no Preço Base',
-                    data: { labels: ['Ticket Alta Estação', 'Ticket Vale Sazonal'], datasets: [{ label: 'Preço Praticado (R$)', data: [441, 304], backgroundColor: [eliteColors.blue, eliteColors.pink] }] }
+                    type: 'bar', id: 'c5', title: 'Comparativo de Ticket (Alta x Baixa Temporada)',
+                    data: { labels: ['Ticket com Item Sazonal', 'Ticket Só com Item Básico'], datasets: [{ label: 'Preço Pago pelo Cliente (R$)', data: [441, 304], backgroundColor: [eliteColors.blue, eliteColors.pink] }] }
                 }];
                 break;
 
             case '6':
-                scenario.title = 'Canibalização Orgânica por Preço';
-                scenario.summary = `Análise forense da conta de ${nicheName} revela autossabotagem sistêmica. Frente à concorrência agressiva, o lojista abriu mão da rentabilidade operacional para manter artificialmente o ranqueamento no marketplace.`;
-                scenario.problem = `Após uma queda natural de 14,1% no tráfego, o lojista entrou em pânico e derreteu o pricing do catálogo premium em 31%. Essa tática kamikaze mascarou a queda de volume (-2,4% apenas) e maquiou a conversão (1,4%), porém resultou na pulverização de 33,6% do Faturamento Bruto (R$ 3.8M).`;
-                scenario.challenge = `Arquitetura de 'Pricing Authority'. Congelaremos descontos predatórios em ${ctx.termo}. Ao invés de subsidiar o mercado, o budget de margem sacrificada será alocado em Product Ads nos slots vitais (Segundas 12h-18h), criando demanda própria e permitindo o reposicionamento imediato de valor.`;
+                scenario.title = 'A Guerra de Preços Destruiu o Lucro';
+                scenario.summary = `Esses números são a prova do que acontece quando um vendedor tenta segurar posições nas buscas a qualquer custo. O faturamento despencou para ${dadosConta.faturamento} não por falta de volume, mas porque a conta se envolveu em uma guerra sangrenta de preços com a concorrência.`;
+                scenario.problem = `O Mercado Livre mudou o algoritmo ou a concorrência asiática entrou forte no nicho, fazendo o tráfego geral da loja cair em 14,1%. Para não ver seus anúncios de **${ctx.prodHigh}** até os menores de **${ctx.prodLow}** despencarem para a página 3 das buscas, o lojista acionou o "modo desespero" e cortou seus preços sem nenhum cálculo prévio.\n\nO volume de produtos embalados continuou enorme, com míseros 2,4% de queda. O ranqueamento foi aparentemente salvo. Porém, essa atitude destruiu o negócio: ele jogou seu Ticket Médio no chão (-31%), faturando cada pedido por apenas R$ 304.\n\nNesse exato momento, o lojista de ${ctx.termo} está trabalhando de forma alucinada, pagando taxas altíssimas, comissão cheia e frete grátis para o ML, mas comemorando a venda de produtos onde ele basicamente não tem lucro, pagando para trabalhar.`;
                 scenario.kpis = defaultKpis;
                 scenario.charts = [{
-                    type: 'line', id: 'c6', title: 'Curva Kamikaze: Subtração de Valor',
-                    data: { labels: ['Q1', 'Q2', 'Q3 (Início Guerra)', 'Status Atual'], datasets: [{ label: 'Desvalorização do Catálogo (%)', data: [0, -10, -25, -31], borderColor: eliteColors.pink, tension: 0.1 }] }
+                    type: 'line', id: 'c6', title: 'Como a Guerra de Preços Matou o Valor',
+                    data: { labels: ['Início do Mês', 'Semana 2', 'Semana 3 (Guerra)', 'Fim do Mês'], datasets: [{ label: 'Queda do Ticket (%)', data: [0, -10, -25, -31], borderColor: eliteColors.pink, tension: 0.1 }] }
                 }];
                 break;
 
             case '7':
-                scenario.title = 'Platô e Morte de Ciclo (Commodity)';
-                scenario.summary = `A assinatura dos dados aponta para fadiga crônica de produto no nicho de ${nicheName}. Uma operação que movimentava volumes superiores hoje definha em R$ 3.8M (-33,6%), presa a um catálogo que perdeu seu 'Edge' de mercado.`;
-                scenario.problem = `A base principal de produtos sofreu comoditização severa pela concorrência. Para sustentar o escoamento logístico (-2,4% em volume), a conta forçou a precificação para baixo, consolidando um Ticket Médio pobre (R$ 304 | -31%). A loja tornou-se um mero centro de distribuição focado em briga de centavos.`;
-                scenario.challenge = `Injeção emergencial de Inovação de Curva A. Com parcos 13% de fidelização (recompra), a operação precisa apresentar novidade aos 7.5k novos leads que passam ali todo mês. Lançaremos linhas premium de ${ctx.prodHigh} com blindagem via catálogo de Ads, restaurando o LTV da base legada.`;
+                scenario.title = 'Comoditização: O Produto Envelheceu';
+                scenario.summary = `Os gráficos apontam uma conta estagnada que foca no passado. A queda brusca para ${dadosConta.faturamento} reflete o fim do ciclo de vida dos produtos que antigamente eram novidade. O mercado mudou, e a loja continuou vendendo as mesmas coisas.`;
+                scenario.problem = `Aqueles produtos premium, como **${ctx.prodHigh}**, que antigamente o cliente pagava caro para ter, agora são vendidos por dezenas de lojistas diferentes no Mercado Livre. O produto virou uma commodity. Com a concorrência extrema por algo que todo mundo tem, as visitas exclusivas caíram 14,1%.\n\nPara conseguir manter o negócio girando e o galpão esvaziando as 11.421 caixas mensais (-2,4% apenas na quantidade), o algoritmo obrigou o vendedor a abaixar seus preços de **${ctx.termo}** todos os meses para se manter competitivo.\n\nComo consequência desse envelhecimento do catálogo, o produto desvalorizou. O Ticket Médio desabou em 31%, e a conta faturou muito menos. Além disso, as 7.500 pessoas novas que compram a promoção não voltam (só 13% de recompra), porque não há novidade ou exclusividade que crie uma marca na cabeça do cliente.`;
                 scenario.kpis = defaultKpis;
                 scenario.charts = [{
-                    type: 'doughnut', id: 'c7', title: 'Saturação de Mix (Commoditization)',
-                    data: { labels: ['Commodities (Volume Sanguessuga)', 'Itens Diferenciados (Margem Real)'], datasets: [{ data: [85, 15], backgroundColor: [eliteColors.pink, eliteColors.blue] }] }
+                    type: 'doughnut', id: 'c7', title: 'Distribuição Atual das Vendas',
+                    data: { labels: ['Vendas Baseadas em Preço Baixo', 'Vendas de Itens Exclusivos'], datasets: [{ data: [85, 15], backgroundColor: [eliteColors.pink, eliteColors.blue] }] }
                 }];
                 break;
 
             case '8':
-                scenario.title = 'A Armadilha Estática do BuyBox';
-                scenario.summary = `Leitura de dados revela a "Falácia do Volume" na operação de ${nicheName}. O investidor que analisar apenas as 11.421 unidades vendidas ignorará o rombo financeiro: a receita caiu 33,6% por vício tático no motor de BuyBox do marketplace.`;
-                scenario.problem = `A operação condicionou-se a vencer a BuyBox via destruição de margem em vez de composição de oferta. O Ticket cedeu 31%, e embora a taxa de conversão pareça atrativa (1,4%), o CAC somado à perda de margem de ${ctx.prodLow} coloca o P&L da empresa no vermelho sistêmico.`;
-                scenario.challenge = `Refatoração total do formato de oferta. Desconectaremos as SKUs principais da briga de BuyBox direta via criação de Bundles (kits exclusivos de valor agregado alto). A verba recuperada de margem financiará Product Ads hiper-focado nas Segundas, garantindo tração orgânica primária e sustentável.`;
+                scenario.title = 'Vício no BuyBox: Trabalhando de Graça';
+                scenario.summary = `Qualquer um que veja o número de 11.421 vendas (quantidade quase não caiu) acharia que essa loja está saudável. Mas o cruzamento de dados alerta: a receita caiu 33,6% puramente porque a loja é refém e viciada em disputar centavos dentro do Catálogo do Mercado Livre.`;
+                scenario.problem = `Para garantir que os anúncios de **${ctx.prodHigh}** e **${ctx.prodLow}** aparecessem como os ganhadores principais da página de catálogo (BuyBox), o lojista ativou uma guerra irracional de descontos. O robô precificador da loja ou do concorrente foi reduzindo o valor das peças agressivamente.\n\nA conversão é aparentemente alta (1,4%), pois o cliente final encontra o produto absurdamente barato e finaliza a compra rápido. Mas o custo dessa vitória na BuyBox é devastador: o Ticket médio derreteu para menos de 305 reais, acumulando uma perda de 31% no valor da venda.\n\nEsse lojista perdeu totalmente o controle sobre a margem de contribuição. O volume de entregas está esmagando a operação dele, o Mercado Livre recebe as taxas alegremente, e no final do dia a empresa dele fica com as migalhas do faturamento reduzido de ${dadosConta.faturamento}.`;
                 scenario.kpis = defaultKpis;
                 scenario.charts = [{
-                    type: 'bar', id: 'c8', title: 'Ilusão de Escala: Receita Ponderada',
-                    data: { labels: ['Sangria de Receita Bruta (%)', 'Desgaste Unitário (Irrelevante)'], datasets: [{ label: 'Queda Registrada', data: [-33.6, -2.4], backgroundColor: [eliteColors.pink, eliteColors.purple] }] }
+                    type: 'bar', id: 'c8', title: 'O Custo Altíssimo de Manter o Volume',
+                    data: { labels: ['Perda Registrada no Faturamento', 'Volume Vendido (A Ilusão)'], datasets: [{ label: 'Variação % no Mês', data: [-33.6, -2.4], backgroundColor: [eliteColors.pink, eliteColors.purple] }] }
                 }];
                 break;
 
             case '9':
-                scenario.title = 'Assimetria Logística no Mercado Envios Full';
-                scenario.summary = `Identificamos uma infração severa na alocação de ativos em ${nicheName}. A retração de 33,6% do faturamento deve-se a um erro de arquitetura na seleção da grade enviada aos Fulfillment Centers do ecossistema ML.`;
-                scenario.problem = `Com aversão ao custo de armazenagem, a diretoria despachou exclusivamente SKUs de altíssimo giro e baixo ticket (${ctx.prodLow}) para o Full. A tração do "Chega Amanhã" forçou a conversão em 1,4% para estes itens, enquanto a linha premium estacionou no Cross-Docking local. Consequência: Ticket desmorona 31%.`;
-                scenario.challenge = `Reversão imediata do algoritmo logístico. Realocaremos a Curva A de ${ctx.prodHigh} para os CDs principais, integrando campanhas de Ads pesadas. Essa fusão (Ads + Frete Rápido em itens caros) fará o Ticket saltar para além dos R$ 450, absorvendo com facilidade eventuais custos de estocagem.`;
+                scenario.title = 'A Estratégia Errada no Full';
+                scenario.summary = `A leitura da telemetria denuncia um problema grave de tomada de decisão logística. A operação contraiu 33,6% do seu faturamento porque o lojista utilizou o centro de distribuição (Mercado Envios Full) de forma totalmente invertida.`;
+                scenario.problem = `Com receio das temidas taxas de armazenamento prolongado do Mercado Livre, o vendedor decidiu mandar apenas os produtos baratos e de giro rápido (como **${ctx.prodLow}**) para os galpões do Full. Ele segurou os produtos de alto ticket (como **${ctx.prodHigh}**) no seu estoque próprio.\n\nA dinâmica da plataforma puniu essa escolha. O consumidor padrão de **${ctx.termo}** filtra suas buscas ativamente pela tag 'Chega Amanhã'. Com isso, a esmagadora maioria das vendas da loja se concentrou nos produtos baratinhos que estavam no Full, mantendo a máquina de envios forte e gerando apenas 2,4% de queda no volume de caixas da loja.\n\nPorém, com as vendas concentradas nos itens de baixo valor, o Ticket Médio sofreu uma retração gigantesca de 31% (chegando a R$ 304). As pessoas até querem o produto premium da marca, mas acabam não comprando porque o frete ou o prazo é desvantajoso comparado ao que está no Full.`;
                 scenario.kpis = defaultKpis;
                 scenario.charts = [{
-                    type: 'doughnut', id: 'c9', title: 'Falha de Alocação de Ativos (Full)',
-                    data: { labels: ['SKUs de Entrada (Full)', 'SKUs Premium (Retidos na Origem)'], datasets: [{ data: [90, 10], backgroundColor: [eliteColors.purple, eliteColors.pink] }] }
+                    type: 'doughnut', id: 'c9', title: 'Produtos que o Lojista mandou pro Full',
+                    data: { labels: ['Produtos Baratos e de Giro', 'Produtos Premium (Deixou em Casa)'], datasets: [{ data: [90, 10], backgroundColor: [eliteColors.purple, eliteColors.pink] }] }
                 }];
                 break;
 
             case '10':
-                scenario.title = 'Colapso Produtivo na Linha Premium';
-                scenario.summary = `Os gráficos funcionam como um 'Raio-X' de gargalo de Supply Chain na fábrica de ${nicheName}. A perda abrupta de 33,6% em receita não derivou do algoritmo, mas de incapacidade fabril em atender a linha de alto padrão.`;
-                scenario.problem = `Atrasos e quebras operacionais paralisaram a oferta de kits high-end e personalizados (${ctx.termo}). Sem inventário premium, o Ads foi cortado (-14,1% visitas). O fluxo remanescente adquiriu produtos básicos de prateleira (-2,4% de queda em vol.), forçando o Ticket Médio global a cair R$ 137 reais (-31%).`;
-                scenario.challenge = `Desenvolvimento de 'Waitlist' e reaquecimento da base. Capitalizaremos em cima dos 7.527 novos clientes atraídos pelos itens de entrada. Estruturaremos comunicação B2B focada no cross-selling de upgrades, enquanto adequamos o Product Ads para explodir as vendas assim que a linha premium normalizar a produção.`;
+                scenario.title = 'Falta de Estoque Premium (Gargalo Produtivo)';
+                scenario.summary = `Os gráficos expõem uma quebra grave na reposição de estoque do lojista. O faturamento global despencou de quase R$ 5.7 Milhões para R$ 3.8 Milhões porque os produtos de maior qualidade, que traziam margem e lucro real para a empresa, desapareceram das prateleiras do ML.`;
+                scenario.problem = `Houve um atraso sério com os fornecedores, na importação ou na montagem da linha premium da loja, impossibilitando as vendas de **${ctx.prodHigh}**. Sem ter como vender a sua principal linha de produtos caros, o lojista pausou os anúncios e desligou campanhas, fazendo o tráfego da conta retrair duramente em 14,1%.\n\nNo entanto, o negócio continuou vendendo o que estava à pronta entrega: o mix de entrada mais acessível (como **${ctx.prodLow}**). Como eles vendem bastante quantidade, a queda de volume total foi irrelevante (apenas -2,4%). Mas a ausência da linha de elite no mix de vendas fatiou o Ticket Médio em 31%, reduzindo-o a R$ 304,33 por transação.\n\nO resultado de não ter o produto no momento certo é uma conta enxugada, que trabalha igual para vender itens baratos, atraindo um público de primeira viagem enorme (7.527 pessoas), mas pecando na retenção (13%), já que o cliente volta buscando o item de alto padrão e não o encontra.`;
                 scenario.kpis = defaultKpis;
                 scenario.charts = [{
-                    type: 'bar', id: 'c10', title: 'Impacto Direto do Gargalo no LTV',
-                    data: { labels: ['Preço Médio Estrutural', 'Preço Médio Deficitário (Atual)'], datasets: [{ label: 'Cotação do Ticket (R$)', data: [441, 304], backgroundColor: [eliteColors.blue, eliteColors.pink] }] }
+                    type: 'bar', id: 'c10', title: 'Como Ficar sem o Produto Top Cai o Ticket',
+                    data: { labels: ['Ticket Antigo (Com produto Top)', 'Ticket Atual (Sem o produto Top)'], datasets: [{ label: 'Preço Médio por Venda (R$)', data: [441, 304], backgroundColor: [eliteColors.blue, eliteColors.pink] }] }
                 }];
                 break;
         }
@@ -518,13 +497,13 @@
         const kpiCardsContainer = document.getElementById('kpi-cards');
         const chartsContainer = document.getElementById('charts-container');
         const briefingProblem = document.getElementById('briefing-problem');
-        const briefingChallenge = document.getElementById('briefing-challenge');
         
         badgeNicho.textContent = scenario.niche;
         briefingTitle.textContent = scenario.title;
-        briefingSummary.innerHTML = `<span class="text-white font-semibold">Resumo Executivo:</span> <span class="text-gray-400">${scenario.summary}</span>`;
-        briefingProblem.textContent = scenario.problem;
-        briefingChallenge.textContent = scenario.challenge;
+        briefingSummary.innerHTML = `<span class="text-white font-semibold">Resumo Rápido:</span> <span class="text-gray-400">${scenario.summary}</span>`;
+        
+        // Substituindo \n\n por tags de parágrafo HTML para ficar formatado
+        briefingProblem.innerHTML = `<p class="mb-4">${scenario.problem.replace(/\n\n/g, '</p><p class="mb-4">')}</p>`;
         
         kpiCardsContainer.innerHTML = '';
         scenario.kpis.forEach(kpi => {
@@ -540,8 +519,8 @@
         const globalCharts = [
             ...scenario.charts,
             {
-                type: 'bar', id: 'heatmap_sim', title: 'Ondas de Demanda (Map. Calor Extraído)',
-                data: { labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'], datasets: [{ label: 'Índice de Tráfego Convergido', data: [100, 85, 80, 75, 60, 40, 50], backgroundColor: eliteColors.blue }] }
+                type: 'bar', id: 'heatmap_sim', title: 'Ondas de Demanda (Extraído do Mapa de Calor)',
+                data: { labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'], datasets: [{ label: 'Pico de Vendas e Visitas', data: [100, 85, 80, 75, 60, 40, 50], backgroundColor: eliteColors.blue }] }
             }
         ];
 
@@ -603,7 +582,7 @@
             renderScenario(currentScenarioData);
         });
 
-        // --- EXPORTAÇÃO PDF ELITE ---
+        // --- EXPORTAÇÃO DE PDF ---
         exportPdfBtn.addEventListener('click', async () => {
             if (!currentScenarioData) return;
 
@@ -615,7 +594,7 @@
             const CONTENT_WIDTH = PAGE_WIDTH - (MARGIN * 2);
             let y = MARGIN; 
 
-            // Dark Mode Background
+            // Fundo dark
             doc.setFillColor(5, 5, 5); // #050505
             doc.rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, 'F');
 
@@ -630,14 +609,14 @@
                 return currentY + 8;
             }
 
-            // Header
+            // Cabeçalho
             doc.setFont('helvetica', 'bold');
             doc.setFontSize(9);
             doc.setTextColor(156, 163, 175); // Gray
-            doc.text(`ARQUITETURA MAMBA DIGITAL - NICHO: ${currentScenarioData.niche.toUpperCase()}`, PAGE_WIDTH / 2, y, { align: 'center' });
+            doc.text(`SHARKTANK MAMBA - DIAGNÓSTICO: ${currentScenarioData.niche.toUpperCase()}`, PAGE_WIDTH / 2, y, { align: 'center' });
             y += 8;
 
-            // Title
+            // Titulo
             doc.setFont('helvetica', 'bold');
             doc.setFontSize(16);
             doc.setTextColor(255, 255, 255);
@@ -645,7 +624,7 @@
             doc.text(titleLines, PAGE_WIDTH / 2, y, { align: 'center' });
             y += (titleLines.length * 6) + 8;
 
-            // Summary
+            // Resumo
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(10);
             doc.setTextColor(200, 200, 200);
@@ -654,7 +633,7 @@
             y += (summaryLines.length * 4.5) + 10;
 
             // KPIs
-            y = drawSectionTitle('Parâmetros Analíticos', y);
+            y = drawSectionTitle('Métricas do Lojista', y);
             doc.setFontSize(9);
             let kpiStartY = y;
             currentScenarioData.kpis.forEach((kpi, index) => {
@@ -664,7 +643,6 @@
                 doc.setTextColor(255, 255, 255);
                 doc.text(`${kpi.label}:`, xPos, yPos);
                 doc.setFont('helvetica', 'normal');
-                // Simula as cores elitizadas
                 if(kpi.class.includes('pink')) doc.setTextColor(255, 77, 141);
                 else if(kpi.class.includes('purple')) doc.setTextColor(124, 58, 237);
                 else doc.setTextColor(255, 255, 255);
@@ -673,8 +651,8 @@
                 if (index === currentScenarioData.kpis.length - 1) y = yPos + 15;
             });
 
-            // Charts
-            y = drawSectionTitle('Visualização de Dados', y);
+            // Gráficos
+            y = drawSectionTitle('Visão de Mercado Livre', y);
             let chartPromises = currentScenarioData.charts.map(chartInfo => {
                 const canvas = document.getElementById(chartInfo.id);
                 activeCharts[chartInfo.id].options.animation = false;
@@ -698,7 +676,7 @@
                 y += imgHeight + 10;
             });
 
-            // Text Blocks
+            // Bloco de Texto do Problema
             function drawTextBlock(title, text, currentY) {
                 if (currentY > PAGE_HEIGHT - 35) {
                     doc.addPage();
@@ -709,15 +687,18 @@
                 doc.setFont('helvetica', 'normal');
                 doc.setFontSize(10);
                 doc.setTextColor(200, 200, 200);
-                const textLines = doc.splitTextToSize(text, CONTENT_WIDTH);
+                
+                // Tratar quebras de linha pro PDF
+                const textWithBreaks = text.replace(/<br>/g, '\n').replace(/<\/p><p class="mb-4">/g, '\n\n');
+                
+                const textLines = doc.splitTextToSize(textWithBreaks, CONTENT_WIDTH);
                 doc.text(textLines, MARGIN, currentY);
                 return currentY + (textLines.length * 4.5) + 8;
             }
 
-            y = drawTextBlock('Diagnóstico Estrutural', currentScenarioData.problem, y);
-            y = drawTextBlock('Solução Arquitetural Mamba', currentScenarioData.challenge, y);
+            y = drawTextBlock('O Que Aconteceu Com a Conta', currentScenarioData.problem, y);
 
-            doc.save(`Mamba_Architecture_${currentScenarioData.niche.replace(/\s+/g, '')}.pdf`);
+            doc.save(`SharkTank_Diagnostico_${currentScenarioData.niche.replace(/\s+/g, '')}.pdf`);
         });
     });
     </script>
