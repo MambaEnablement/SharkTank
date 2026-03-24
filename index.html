@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemplo: Cenário Atual e Objetivos - Mamba Digital</title>
+    <title>SharkTank 2.0 | Mamba Digital</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Chart.js & PDF Export -->
+    <!-- Dependências -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -19,394 +19,531 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
     
-    <!-- Configuração Tailwind (Dark Elite) -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'mamba-bg': '#050505',
-                        'mamba-glass': 'rgba(17, 17, 17, 0.78)',
-                        'mamba-blue': '#2563eb',
-                        'mamba-purple': '#7c3aed',
-                        'mamba-pink': '#ff4d8d',
-                        'mamba-border': 'rgba(255, 255, 255, 0.1)',
-                        'mamba-text-sec': '#9ca3af'
-                    },
-                    fontFamily: {
-                        'sans': ['Inter', 'sans-serif'],
-                        'display': ['Montserrat', 'sans-serif'],
-                    },
-                    backgroundImage: {
-                        'mamba-gradient': 'linear-gradient(to right, #2563eb, #7c3aed)',
-                        'mamba-alert': 'linear-gradient(to right, #ff4d8d, #e11d48)'
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
+        /* ========================================================
+           IDENTIDADE VISUAL: DARK ELITE (MAMBA DESIGN ARCHITECT)
+           ======================================================== */
+        
+        :root {
+            --mamba-dark: #050505;
+            --mamba-glass: rgba(17, 17, 17, 0.78);
+            --mamba-blue: #2563eb;
+            --mamba-purple: #7c3aed;
+            --mamba-pink: #ff4d8d;
+            --mamba-text-main: #ffffff;
+            --mamba-text-sec: #9ca3af;
+            --mamba-border: rgba(255, 255, 255, 0.1);
+        }
+
         body {
-            background-color: #050505;
-            color: #ffffff;
             font-family: 'Inter', sans-serif;
-            position: relative;
-        }
-
-        /* Fixed Grid Overlay */
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-size: 50px 50px;
+            background-color: var(--mamba-dark);
+            color: var(--mamba-text-main);
+            /* Grid Overlay Sutil */
             background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            z-index: -1;
-            pointer-events: none;
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center top;
+            background-attachment: fixed;
         }
 
-        /* Glowing Orbs for Cyberpunk Depth */
-        .bg-glow {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(37,99,235,0.1) 0%, rgba(5,5,5,0) 70%);
-            top: -200px;
-            left: -200px;
-            z-index: -1;
-            pointer-events: none;
-        }
-        .bg-glow-2 {
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(124,58,237,0.08) 0%, rgba(5,5,5,0) 70%);
-            bottom: -100px;
-            right: -100px;
-            z-index: -1;
-            pointer-events: none;
-        }
+        .montserrat { font-family: 'Montserrat', sans-serif; }
 
-        /* Glassmorphism Classes */
+        /* Glassmorphism Panels */
         .glass-panel {
-            background-color: rgba(17, 17, 17, 0.78);
+            background-color: var(--mamba-glass);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--mamba-border);
             border-radius: 1rem;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
-            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
-        .glass-input {
-            background-color: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            transition: all 0.3s ease;
-        }
-        
-        .glass-input:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 15px rgba(37, 99, 235, 0.2);
-            outline: none;
-        }
+        /* Glowing Effects */
+        .glow-blue { box-shadow: 0 0 15px rgba(37, 99, 235, 0.3); border-color: rgba(37, 99, 235, 0.5); }
+        .glow-purple { box-shadow: 0 0 15px rgba(124, 58, 237, 0.3); border-color: rgba(124, 58, 237, 0.5); }
+        .glow-pink { box-shadow: 0 0 15px rgba(255, 77, 141, 0.3); border-color: rgba(255, 77, 141, 0.5); }
 
-        /* Neumorphic/Neon Glows */
-        .glow-btn {
-            box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
-        }
-        .glow-btn:hover {
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.6);
-        }
-        
-        .glow-text {
-            text-shadow: 0 0 20px rgba(37, 99, 235, 0.5);
-        }
+        /* Text Colors */
+        .text-mamba-blue { color: var(--mamba-blue); }
+        .text-mamba-purple { color: var(--mamba-purple); }
+        .text-mamba-pink { color: var(--mamba-pink); }
+        .text-mamba-sec { color: var(--mamba-text-sec); }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #2563eb; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--mamba-dark); }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--mamba-purple); }
 
+        /* KPI Cards */
+        .kpi-card {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--mamba-border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .kpi-card:hover { background-color: rgba(255, 255, 255, 0.04); transform: translateY(-2px); }
+
+        /* Formulários */
         select {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--mamba-border);
+            color: #fff;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 1rem center;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
-            background-size: 1.2em 1.2em;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+        select:focus { outline: none; border-color: var(--mamba-blue); box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2); }
+        select option { background-color: var(--mamba-dark); color: #fff; }
+
+        .chart-container {
+            position: relative; width: 100%; height: 320px;
         }
     </style>
 </head>
 
 <body class="antialiased min-h-screen flex flex-col">
 
-    <!-- Background Elements -->
-    <div class="bg-grid"></div>
-    <div class="bg-glow"></div>
-    <div class="bg-glow-2"></div>
-
-    <!-- Header Elite -->
-    <header class="glass-panel rounded-none border-t-0 border-l-0 border-r-0 border-b-mamba-border sticky top-0 z-20">
-        <div class="h-1 w-full bg-mamba-gradient"></div>
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-4">
-                <div class="bg-mamba-blue/10 p-2.5 rounded-xl border border-mamba-blue/30 shadow-[0_0_15px_rgba(37,99,235,0.2)]">
-                    <svg class="w-6 h-6 text-mamba-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                </div>
-                <div>
-                    <h1 class="font-display text-2xl font-black text-white tracking-tight glow-text uppercase">SharkTank <span class="text-transparent bg-clip-text bg-mamba-gradient">2.0</span></h1>
-                    <p class="text-xs text-mamba-text-sec uppercase tracking-[0.2em] font-semibold">Mamba Digital Architecture</p>
-                </div>
+    <!-- HEADER -->
+    <header class="glass-panel mx-4 mt-4 mb-8 py-5 px-6 sm:px-8 border-t-0 border-l-0 border-r-0 rounded-none rounded-b-2xl border-b border-[rgba(255,255,255,0.05)] sticky top-0 z-50">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+            <div>
+                <h1 class="montserrat text-2xl tracking-tight text-white uppercase flex items-center gap-3">
+                    <span class="w-3 h-3 rounded-full bg-mamba-blue animate-pulse glow-blue"></span>
+                    SharkTank 2.0
+                </h1>
+                <p class="text-xs text-mamba-sec mt-1 uppercase tracking-widest font-semibold ml-6">Elite Dashboard Simulator</p>
             </div>
-            <p class="text-sm text-mamba-text-sec font-medium hidden md:block">Estrutura de Cenário Atual e Objetivos</p>
+            <div class="mt-4 sm:mt-0 text-sm font-semibold px-4 py-2 rounded-lg bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.05)] text-mamba-sec">
+                MAMBA DIGITAL ARCHITECTURE
+            </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow z-10">
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 flex-grow">
         
-        <!-- Display Grande / Seletor -->
-        <section class="mb-12 max-w-4xl mx-auto text-center">
-            <h2 class="font-display text-4xl md:text-5xl font-black mb-4 tracking-tighter">ANÁLISE DE <span class="text-transparent bg-clip-text bg-mamba-gradient">CENÁRIOS</span></h2>
+        <!-- ETAPA 1 e 2: CONFIGURAÇÃO -->
+        <section class="mb-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
-            <!-- Callout de Instrução para o Colaborador -->
-            <div class="glass-panel p-6 border-l-4 border-l-mamba-purple mb-8 text-left max-w-3xl mx-auto relative overflow-hidden group">
-                <div class="absolute inset-0 bg-mamba-purple/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <h3 class="font-display text-sm font-bold text-white mb-3 flex items-center gap-2 uppercase tracking-wide">
-                    <svg class="w-5 h-5 text-mamba-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Atenção, Colaborador: Objetivo desta Ferramenta
-                </h3>
-                <p class="text-mamba-text-sec text-[15px] leading-relaxed font-light">
-                    Este ambiente é o seu <strong>guia prático de calibração</strong> para o SharkTank. Utilize os exemplos abaixo para aprender o padrão esperado de avaliação. Entenda como <strong>identificar gargalos reais (Problema)</strong>, interpretar as métricas e estruturar o plano de ação corretivo <strong>(Objetivo/Desafio)</strong> de forma clara e profissional antes da sua apresentação.
+            <!-- Etapa 1: Visão da Conta (Imagens Pré-Carregadas) -->
+            <div class="glass-panel p-6 lg:col-span-7 flex flex-col shadow-2xl">
+                <div class="flex items-center gap-3 mb-6 border-b border-[rgba(255,255,255,0.1)] pb-4">
+                    <div class="w-8 h-8 rounded-lg bg-[#2563eb] text-white flex items-center justify-center font-bold font-montserrat shadow-[0_0_15px_rgba(37,99,235,0.5)]">1</div>
+                    <h2 class="montserrat text-lg uppercase tracking-wide text-white">Telemetria da Conta Real</h2>
+                </div>
+                
+                <p class="text-sm text-mamba-sec mb-4 font-light">
+                    Dados coletados: Receita <span class="text-mamba-pink font-semibold">-33,6%</span> | Ticket <span class="text-mamba-pink font-semibold">-31%</span> | Recompra <span class="text-mamba-purple font-semibold">13%</span>
                 </p>
+                
+                <!-- Galeria de Imagens com Scroll -->
+                <div class="flex-grow overflow-y-auto max-h-[500px] pr-2 space-y-6 rounded-lg bg-[rgba(0,0,0,0.3)] p-4 border border-[rgba(255,255,255,0.05)]">
+                    <div class="relative group">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-end p-4">
+                            <span class="text-xs font-bold uppercase tracking-wider">Visão Geral de Vendas</span>
+                        </div>
+                        <img src="MÉTRICAS.png" alt="Métricas Principais" class="w-full h-auto rounded-lg border border-[rgba(255,255,255,0.1)] shadow-lg" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjIwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iSW50ZXIiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM3NzciIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkltYWdlbTogTcOJVFJJQ0FTLnBuZyBtw6lzc2luZzwvdGV4dD48L3N2Zz4='">
+                    </div>
+                    
+                    <div class="relative group">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-end p-4">
+                            <span class="text-xs font-bold uppercase tracking-wider">Concentração e Heatmap</span>
+                        </div>
+                        <img src="MAPA DE CALOR.png" alt="Mapa de Calor" class="w-full h-auto rounded-lg border border-[rgba(255,255,255,0.1)] shadow-lg" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjIwMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iSW50ZXIiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM3NzciIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkltYWdlbTogTUFQQSBERSBDQUxPUi5wbmcgbcOpc3Npbmc8L3RleHQ+PC9zdmc+'">
+                    </div>
+
+                    <div class="relative group">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-end p-4">
+                            <span class="text-xs font-bold uppercase tracking-wider">Retenção de Clientes</span>
+                        </div>
+                        <img src="MÉTRICAS RECOMPRA.png" alt="Métricas de Recompra" class="w-full h-auto rounded-lg border border-[rgba(255,255,255,0.1)] shadow-lg" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEyMCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzMzMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iSW50ZXIiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM3NzciIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkltYWdlbTogTcOJVFJJQ0FTIFJFQ09NUFJBLnBuZyBtw6lzc2luZzwvdGV4dD48L3N2Zz4='">
+                    </div>
+                </div>
             </div>
 
-            <div class="glass-panel p-2 md:p-4 max-w-2xl mx-auto relative group">
-                <div class="absolute -inset-0.5 bg-mamba-gradient rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
-                <div class="relative">
-                    <select id="scenario-select" class="block w-full px-5 py-4 text-lg glass-input rounded-lg cursor-pointer font-semibold uppercase tracking-wide">
-                        <option value="" class="bg-mamba-bg text-white">-- INICIALIZAR RENDERIZAÇÃO DE CENÁRIO --</option>
-                    </select>
+            <!-- Etapa 2: Parametrização Estratégica -->
+            <div class="glass-panel p-6 lg:col-span-5 flex flex-col justify-between h-full shadow-2xl">
+                <div>
+                    <div class="flex items-center gap-3 mb-6 border-b border-[rgba(255,255,255,0.1)] pb-4">
+                        <div class="w-8 h-8 rounded-lg bg-[#7c3aed] text-white flex items-center justify-center font-bold font-montserrat shadow-[0_0_15px_rgba(124,58,237,0.5)]">2</div>
+                        <h2 class="montserrat text-lg uppercase tracking-wide text-white">Parâmetros de Diagnóstico</h2>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="group">
+                            <label for="select-nicho" class="block text-xs uppercase tracking-widest font-semibold text-mamba-sec mb-2 group-focus-within:text-mamba-purple transition-colors">Vertical de Negócio</label>
+                            <select id="select-nicho" class="block w-full px-4 py-4 rounded-xl text-sm font-medium transition-all">
+                                <option value="">[ SELECIONE O NICHO DE ATUAÇÃO ]</option>
+                                <option value="Casa e Decoração">Casa e Decoração</option>
+                                <option value="Eletrônicos">Eletrônicos</option>
+                                <option value="Moda">Moda</option>
+                                <option value="Pet">Pet</option>
+                                <option value="Beleza e Cuidado Pessoal">Beleza e Cuidado Pessoal</option>
+                                <option value="Autopeças">Autopeças</option>
+                            </select>
+                        </div>
+
+                        <div class="group">
+                            <label for="scenario-select" class="block text-xs uppercase tracking-widest font-semibold text-mamba-sec mb-2 group-focus-within:text-mamba-blue transition-colors">Hipótese da Anomalia (Root Cause)</label>
+                            <select id="scenario-select" class="block w-full px-4 py-4 rounded-xl text-sm font-medium transition-all">
+                                <option value="">[ DEFINA A CAUSA RAIZ DA QUEDA ]</option>
+                                <option value="1">Subutilização de Ads (Corte de verba no High Ticket)</option>
+                                <option value="2">Perda de Selo (Derrubou tráfego, forçou baixa de preço)</option>
+                                <option value="3">Ruptura do Produto Herói (Sobrou apenas produto barato)</option>
+                                <option value="4">Ambição de Dobrar (Foco errado em novos vs recompra)</option>
+                                <option value="5">Sazonalidade (Fim da temporada do High Ticket)</option>
+                                <option value="6">Margem Destruída por Falta de Tráfego Orgânico</option>
+                                <option value="7">Platô de Crescimento (O ciclo de vida do produto caiu)</option>
+                                <option value="8">Vício em Queima de Preço (O desespero pelo BuyBox)</option>
+                                <option value="9">Full Subutilizado (Enviou apenas o ticket baixo pro CD)</option>
+                                <option value="10">Gargalo Produtivo (Pausou os itens caros/premium)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-10">
+                    <button id="btn-generate" class="w-full bg-[#2563eb] hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 glow-blue montserrat uppercase tracking-wider text-sm flex items-center justify-center gap-2">
+                        <span>Compilar Arquitetura de Pitch</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </button>
+                    <!-- MENSAGEM DE ERRO -->
+                    <div id="error-message" class="hidden mt-4 bg-[rgba(255,77,141,0.1)] border border-[#ff4d8d] text-[#ff4d8d] px-4 py-3 rounded-lg text-xs font-semibold text-center uppercase tracking-wide">
+                        Parâmetros Incompletos. Selecione Nicho e Hipótese.
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Dashboard do Cenário -->
-        <section id="scenario-briefing" class="hidden max-w-[1400px] mx-auto opacity-0 transition-opacity duration-500 ease-in-out">
-            
-            <!-- Controle do Dashboard -->
-            <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4 border-b border-mamba-border pb-6">
-                <h3 class="font-display text-2xl md:text-3xl font-bold text-white leading-tight uppercase" id="briefing-title"></h3>
-                <button id="export-pdf-btn" class="flex items-center gap-3 bg-mamba-gradient text-white font-bold py-3 px-6 rounded-lg glow-btn transition-all duration-300 transform hover:scale-105 whitespace-nowrap uppercase tracking-wider text-sm hidden">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    Extrair Relatório
-                </button>
-            </div>
+        <!-- BRIEFING DO CENÁRIO GERADO -->
+        <section id="scenario-briefing" class="mb-12 hidden">
+            <div class="glass-panel p-6 sm:p-8 relative overflow-hidden">
+                <!-- Efeito Decorativo -->
+                <div class="absolute -top-24 -right-24 w-64 h-64 bg-[#7c3aed] rounded-full mix-blend-screen filter blur-[100px] opacity-20 pointer-events-none"></div>
+                <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-[#2563eb] rounded-full mix-blend-screen filter blur-[100px] opacity-20 pointer-events-none"></div>
 
-            <!-- Grid System Principal -->
-            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-8">
-                
-                <!-- Coluna Esquerda: Resumo & KPIs -->
-                <div class="xl:col-span-1 flex flex-col gap-8">
-                    <!-- Resumo -->
-                    <div class="glass-panel p-6 border-l-4 border-l-mamba-blue relative overflow-hidden">
-                        <div class="absolute top-0 right-0 p-4 opacity-10">
-                            <svg class="w-24 h-24 text-mamba-blue" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        </div>
-                        <h4 class="font-display text-xs text-mamba-blue uppercase tracking-[0.2em] mb-3">Status Atual da Conta</h4>
-                        <p id="briefing-summary" class="text-slate-300 text-[15px] leading-relaxed font-light"></p>
-                    </div>
-
-                    <!-- KPIs -->
+                <!-- Cabeçalho do Relatório -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 pb-6 border-b border-[rgba(255,255,255,0.05)] relative z-10">
                     <div>
-                        <h4 class="font-display text-xs text-mamba-text-sec uppercase tracking-[0.2em] mb-4 pl-2">Métricas Primárias</h4>
-                        <div id="kpi-cards" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <!-- KPI cards injeção via JS -->
+                        <div class="flex items-center gap-3 mb-2">
+                            <span id="badge-nicho" class="inline-block bg-[rgba(124,58,237,0.15)] border border-[#7c3aed] text-[#7c3aed] text-[10px] px-3 py-1 rounded-md uppercase tracking-widest font-bold"></span>
+                            <span class="inline-block bg-[rgba(255,255,255,0.05)] text-mamba-sec text-[10px] px-3 py-1 rounded-md uppercase tracking-widest font-bold">Relatório Gerencial</span>
+                        </div>
+                        <h3 class="montserrat text-2xl md:text-3xl font-black text-white" id="briefing-title"></h3>
+                    </div>
+                    <button id="export-pdf-btn" class="mt-4 sm:mt-0 bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.1)] text-white font-semibold py-2.5 px-5 rounded-lg transition-all duration-300 text-xs uppercase tracking-widest flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        Exportar Relatório PDF
+                    </button>
+                </div>
+                
+                <div class="relative z-10 space-y-8" id="briefing-content">
+                    
+                    <!-- Resumo -->
+                    <div class="bg-[rgba(0,0,0,0.4)] p-6 rounded-xl border border-[rgba(255,255,255,0.05)] border-l-4 border-l-[#2563eb]">
+                        <p id="briefing-summary" class="text-base text-gray-200 leading-relaxed font-light"></p>
+                    </div>
+                    
+                    <!-- KPIs Dinâmicos -->
+                    <div id="kpi-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <!-- KPI cards injectados aqui -->
+                    </div>
+
+                    <!-- Gráficos -->
+                    <div id="charts-container" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Charts injectados aqui -->
+                    </div>
+
+                    <!-- Diagnóstico Estrutural -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="glass-panel bg-[rgba(255,77,141,0.03)] p-6 border-[rgba(255,77,141,0.2)]">
+                            <h4 class="montserrat text-sm uppercase tracking-widest text-[#ff4d8d] mb-4 flex items-center gap-2 font-bold">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                Vulnerabilidade Detectada
+                            </h4>
+                            <p id="briefing-problem" class="text-gray-300 leading-relaxed text-sm font-light"></p>
+                        </div>
+
+                        <div class="glass-panel bg-[rgba(37,99,235,0.03)] p-6 border-[rgba(37,99,235,0.2)]">
+                            <h4 class="montserrat text-sm uppercase tracking-widest text-[#2563eb] mb-4 flex items-center gap-2 font-bold">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                Solução Mamba Architecture
+                            </h4>
+                            <p id="briefing-challenge" class="text-gray-300 leading-relaxed text-sm font-light"></p>
                         </div>
                     </div>
-                </div>
 
-                <!-- Coluna Direita: Gráficos -->
-                <div class="xl:col-span-2">
-                    <h4 class="font-display text-xs text-mamba-text-sec uppercase tracking-[0.2em] mb-4 pl-2">Visualização de Dados (Data Viz)</h4>
-                    <div id="charts-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
-                        <!-- Gráficos injeção via JS -->
-                    </div>
                 </div>
             </div>
-
-            <!-- Problema e Desafio (Features) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                <!-- Problema -->
-                <div class="glass-panel p-8 relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-mamba-pink/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="absolute top-0 left-0 w-1 h-full bg-mamba-pink shadow-[0_0_10px_#ff4d8d]"></div>
-                    <h4 class="font-display text-lg font-bold text-white uppercase tracking-wide mb-4 flex items-center gap-3">
-                        <span class="bg-mamba-pink/20 p-2 rounded text-mamba-pink"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg></span>
-                        Diagnóstico / Problema
-                    </h4>
-                    <p id="briefing-problem" class="text-mamba-text-sec font-light leading-relaxed"></p>
-                </div>
-
-                <!-- Desafio -->
-                <div class="glass-panel p-8 relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-mamba-blue/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="absolute top-0 left-0 w-1 h-full bg-mamba-blue shadow-[0_0_10px_#2563eb]"></div>
-                    <h4 class="font-display text-lg font-bold text-white uppercase tracking-wide mb-4 flex items-center gap-3">
-                        <span class="bg-mamba-blue/20 p-2 rounded text-mamba-blue"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></span>
-                        Objetivo / Desafio
-                    </h4>
-                    <p id="briefing-challenge" class="text-mamba-text-sec font-light leading-relaxed"></p>
-                </div>
-            </div>
-            
         </section>
     </main>
     
-    <footer class="border-t border-mamba-border mt-auto bg-mamba-bg/80 backdrop-blur z-20 relative">
-        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-xs text-mamba-text-sec font-semibold uppercase tracking-widest">
-            <p>&copy; 2026 Mamba Digital Architect. All rights reserved.</p>
-            <p class="mt-2 sm:mt-0 flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-mamba-blue shadow-[0_0_8px_#2563eb] animate-pulse"></span>
-                System Online
-            </p>
+    <footer class="border-t border-[rgba(255,255,255,0.05)] mt-12 py-8 bg-[rgba(0,0,0,0.5)]">
+        <div class="container mx-auto px-6 text-center text-xs text-mamba-sec font-semibold uppercase tracking-widest">
+            <p>&copy; 2026 Mamba Digital Architecture. Confidencial.</p>
         </div>
     </footer>
 
     <script>
-    // DADOS MANTIDOS 100% EXATOS E INTACTOS
-
-    // Remapeamento de cores Mamba para o PDF e lógica visual
-    const tailwindColorMap = {
-        'text-emerald-400': '#2563eb', // Mamba Blue
-        'text-violet-400': '#7c3aed', // Mamba Purple
-        'text-orange-400': '#ff4d8d', // Mamba Pink
-        'text-red-400': '#ff4d8d',    // Mamba Pink
-        'text-purple-400': '#7c3aed',
-        'text-gray-400': '#9ca3af',
-        'text-yellow-400': '#ffffff',
-        'white': '#ffffff'
+    // Paleta Centralizada HEX para Charts e PDF (Identidade Dark Elite)
+    const eliteColors = {
+        dark: '#050505',
+        glass: '#111111',
+        blue: '#2563eb',
+        purple: '#7c3aed',
+        pink: '#ff4d8d',
+        textMain: '#ffffff',
+        textSec: '#9ca3af',
+        border: '#333333'
     };
 
-    function getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    function getRandomFloat(min, max, decimals) {
-        const str = (Math.random() * (max - min) + min).toFixed(decimals);
-        return parseFloat(str);
-    }
-
-    // FUNÇÃO ORIGINAL INTACTA
-    function generateRandomScenarios() {
-        const seasonalProducts = [{ name: 'Artigos de Carnaval', pico: 'jan-fev', fora: 'mar-dez' }, { name: 'Decorações de Páscoa', pico: 'mar-abr', fora: 'mai-fev' }, { name: 'Roupas de Festa Junina', pico: 'mai-jul', fora: 'ago-abr' }, { name: 'Materiais Escolares', pico: 'dez-jan', fora: 'fev-nov' }, { name: 'Roupas de Praia', pico: 'nov-fev', fora: 'mar-out' }, { name: 'Agasalhos de Inverno', pico: 'mai-ago', fora: 'set-abr' }, { name: 'Decorações de Halloween', pico: 'set-out', fora: 'nov-ago' }];
-        const personalizedProducts = ['Convites de Casamento Personalizados', 'Brindes Corporativos Gravados a Laser', 'Joias com Gravação Personalizada', 'Quadros Decorativos com Nomes', 'Camisetas Estampadas sob Demanda', 'Canecas com Fotos Personalizadas'];
-        const fixedRanges = { faturamentoAdsMin: 90, faturamentoAdsMax: 130, adsCurvaAImpulsedMin: 3, adsCurvaAImpulsedMax: 8, adsACOMin: 20, adsACOMax: 25, faturamentoLossMin: 0.15, faturamentoLossMax: 0.25, reclamacoesMin: 6.0, reclamacoesMax: 8.0, atrasoDespachoMin: 3.0, atrasoDespachoMax: 4.0, skuDependencyMin: 65, skuDependencyMax: 80, estoqueDiasMin: 7, estoqueDiasMax: 15, poucosProdutosFaturamentoMin: 10, poucosProdutosFaturamentoMax: 25, poucosProdutosSKUMin: 10, poucosProdutosSKUMax: 18, sazonalPicoMin: 40, sazonalPicoMax: 70, sazonalForaMin: 5, sazonalForaMax: 15, baixoAdsFaturamentoMin: 10, baixoAdsFaturamentoMax: 20, baixoAdsInvestMin: 200, baixoAdsInvestMax: 500, baixoAdsROASMin: 4.0, baixoAdsROASMax: 7.0, estagnadoFaturamentoMin: 250, estagnadoFaturamentoMax: 400, estagnadoMesesMin: 5, estagnadoMesesMax: 7, queimaPrecoFaturamentoMin: 150, queimaPrecoFaturamentoMax: 220, queimaPrecoBuyboxMin: 3.0, queimaPrecoBuyboxMax: 4.0, embrionariaFaturamentoMin: 5, embrionariaFaturamentoMax: 15, embrionariaSKUMin: 10, embrionariaSKUMax: 20, embrionariaFullMin: 1, embrionariaFullMax: 5, personalizadoFaturamentoMin: 25, personalizadoFaturamentoMax: 40, personalizadoPrazoMin: 4, personalizadoPrazoMax: 5 };
-        const ranges = fixedRanges;
-        const scenarios = [{ id: '1', title: '⭐ Cenário 1 – Subutilização de Product Ads em conta com alto potencial', data: { faturamentoAtual: getRandomInt(ranges.faturamentoAdsMin, ranges.faturamentoAdsMax), produtosCurvaA: getRandomInt(8, 15), produtosAds: getRandomInt(ranges.adsCurvaAImpulsedMin, ranges.adsCurvaAImpulsedMax), aco: getRandomInt(ranges.adsACOMin, ranges.adsACOMax) }, summary: '', kpis: [], charts: [], problem: 'A operação tem produtos de alto giro e boa margem, mas o investimento em visibilidade é muito baixo. O tráfego está limitado principalmente ao orgânico, e o Retorno sobre Investimento (ROI) está comprometido pela falta de escala nas campanhas de Product Ads.', challenge: 'Expandir o tráfego qualificado para os produtos de Curva A e ativar o potencial máximo do portfólio através de uma estratégia de Product Ads mais robusta e otimizada, visando aumentar o faturamento e a rentabilidade.' }, { id: '2', title: '⭐ Cenário 2 – Perda de selo MercadoLíder por aumento de reclamações', data: { faturamentoAnterior: getRandomInt(150, 250) * 1000, faturamentoAtual: getRandomInt(120, 200) * 1000, reclamacoes: getRandomFloat(ranges.reclamacoesMin, ranges.reclamacoesMax, 1), atrasoDespacho: getRandomFloat(ranges.atrasoDespachoMin, ranges.atrasoDespachoMax, 1) }, summary: '', kpis: [], charts: [], problem: 'O crescimento da operação não foi acompanhado por uma reestruturação eficiente do Serviço de Atendimento ao Cliente (SAC) e da logística de despacho. Isso gerou gargalos que resultaram em um aumento significativo no volume de reclamações e, consequentemente, na queda da exposição dos anúncios e do faturamento.', challenge: 'Implementar ações urgentes para reduzir o índice de reclamações e reestruturar completamente os processos de atendimento ao cliente e logística. O objetivo é recuperar a reputação da conta, reconquistar o selo MercadoLíder Gold e, por fim, restabelecer a performance comercial.' }, { id: '3', title: '⭐ Cenário 3 – Dependência crítica de um único produto', data: { skuPercent: getRandomInt(ranges.skuDependencyMin, ranges.skuDependencyMax), estoqueDias: getRandomInt(ranges.estoqueDiasMin, ranges.estoqueDiasMax), totalSkus: getRandomInt(30, 60), }, summary: '', kpis: [], charts: [], problem: 'O faturamento da conta está em alto risco devido à dependência excessiva de um único produto, que possui uma cobertura de estoque muito baixa. A ruptura desse SKU principal pode causar uma queda drástica nas vendas. Além disso, a baixa representatividade dos outros produtos no catálogo impede a diversificação e o crescimento sustentável.', challenge: 'Desenvolver e implementar uma estratégia para diversificar o mix de produtos, ativando e promovendo outros SKUs do catálogo. É crucial criar um plano de contingência robusto para o SKU principal, garantindo a estabilidade do faturamento e reduzindo a vulnerabilidade da operação.' }, { id: '4', title: '⭐ Cenário 4 – Conta com poucos produtos e ambição de dobrar o faturamento', data: { skus: getRandomInt(ranges.poucosProdutosSKUMin, ranges.poucosProdutosSKUMax), faturamentoAtual: getRandomInt(ranges.poucosProdutosFaturamentoMin, ranges.poucosProdutosFaturamentoMax) * 1000, }, summary: '', kpis: [], charts: [], problem: 'A conta está limitada em seu mix de produtos e não possui estratégias ativas de impulsionamento de tráfego, como Product Ads ou o uso do Mercado Envios Full. Isso impede um crescimento acelerado e a atingimento da meta ambiciosa de dobrar o faturamento em um curto período.', challenge: 'Expandir o sortimento de produtos de forma estratégica, ativar campanhas de Product Ads para aumentar a visibilidade e o tráfego qualificado, e aproveitar as datas sazonais e campanhas do Mercado Livre para escalar rapidamente o faturamento e atingir a meta em 90 dias.' }, { id: '5', title: '⭐ Cenário 5 – Conta com produto extremamente sazonal', data: { seasonalProduct: seasonalProducts[getRandomInt(0, seasonalProducts.length - 1)], picoFaturamento: getRandomInt(ranges.sazonalPicoMin, ranges.sazonalPicoMax) * 1000, foraPicoFaturamento: getRandomInt(ranges.sazonalForaMin, ranges.sazonalForaMax) * 1000 }, summary: '', kpis: [], charts: [], problem: 'Há uma alta concentração de faturamento em poucos meses do ano, o que gera uma instabilidade financeira e a incapacidade de manter um giro de vendas saudável durante todo o ano. O grande volume de estoque parado no período de baixa sazonalidade representa um custo de armazenagem e capital imobilizado.', challenge: 'Desenvolver um mix de produtos complementares que possam ser vendidos fora da sazonalidade principal. É necessário criar uma estratégia de vendas e marketing eficaz para esses novos produtos, a fim de manter o giro da conta e o faturamento estável ao longo de todo o ano, reduzindo o impacto da sazonalidade.' }, { id: '6', title: '⭐ Cenário 6 – Conta com baixo investimento em Ads, mas com boa base', data: { faturamentoAtual: getRandomInt(ranges.baixoAdsFaturamentoMin, ranges.baixoAdsFaturamentoMax) * 1000, adsInvest: getRandomInt(ranges.baixoAdsInvestMin, ranges.baixoAdsInvestMax), roas: getRandomFloat(ranges.baixoAdsROASMin, ranges.baixoAdsROASMax, 1), totalSkus: getRandomInt(20, 40), curvaA: getRandomInt(5, 10) }, summary: '', kpis: [], charts: [], problem: 'A conta possui produtos com boa margem e alto potencial de vendas (Curva A), mas está com o crescimento travado devido ao tráfego limitado. O baixo investimento em Product Ads impede que esses produtos alcancem uma visibilidade maior e que a operação escale seu faturamento.', challenge: 'Escalar o investimento em Product Ads de forma estratégica e mensurável, focando nos produtos de Curva A para aumentar o volume de vendas. O desafio é garantir que esse aumento de investimento resulte em um crescimento sustentável do faturamento, mantendo o controle da margem de lucro e otimizando o ROAS.' }, { id: '7', title: '⭐ Cenário 7 – Conta madura, mas estagnada em platô de faturamento', data: { faturamentoMedio: getRandomInt(ranges.estagnadoFaturamentoMin, ranges.estagnadoFaturamentoMax) * 1000, mesesEstagnado: getRandomInt(ranges.estagnadoMesesMin, ranges.estagnadoMesesMax) }, summary: '', kpis: [], charts: [], problem: 'Apesar de ter uma operação bem estabelecida, com bom catálogo, uso de Full e investimento em Ads, o crescimento da conta parou. Ela atingiu um platô de faturamento, indicando que as estratégias atuais não são mais suficientes para gerar expansão, e há um gargalo de escala não identificado.', challenge: 'Realizar um diagnóstico aprofundado para identificar os gargalos que estão impedindo o crescimento. Propor e implementar novas alavancas para romper o platô de faturamento, que podem incluir o lançamento de novas coleções, exploração de novos canais de venda, otimização de mídia, ou a criação de um diferencial competitivo para a marca.' }, { id: '8', title: '⭐ Cenário 8 – Só vende com queima de preço', data: { faturamentoAtual: getRandomInt(ranges.queimaPrecoFaturamentoMin, ranges.queimaPrecoFaturamentoMax) * 1000, totalSkus: getRandomInt(50, 90), posicaoBuybox: getRandomFloat(ranges.queimaPrecoBuyboxMin, ranges.queimaPrecoBuyboxMax, 1) }, summary: '', kpis: [], charts: [], problem: 'A dependência de descontos agressivos para gerar vendas compromete a margem de lucro da operação e desvaloriza o catálogo. Os anúncios perdem relevância e visibilidade no Mercado Livre, já que a estratégia não foca em valor agregado, mas sim em preço baixo, dificultando a diferenciação da marca.', challenge: 'Otimizar os anúncios para destacar os diferenciais dos produtos e da marca, em vez de apenas o preço. É fundamental reposicionar a operação para vender com base no valor percebido pelo cliente, e não apenas com queima de preço, visando aumentar a margem de lucro e a competitividade no Buybox.' }, { id: '9', title: '⭐ Cenário 9 – Conta embrionária com Full recém-liberado', data: { faturamentoAtual: getRandomInt(ranges.embrionariaFaturamentoMin, ranges.embrionariaFaturamentoMax) * 1000, skus: getRandomInt(ranges.embrionariaSKUMin, ranges.embrionariaSKUMax), fullProducts: getRandomInt(ranges.embrionariaFullMin, ranges.embrionariaFullMax), }, summary: '', kpis: [], charts: [], problem: 'A conta está estruturada e com potencial, mas ainda não conseguiu gerar volume de vendas significativo. A subutilização do Mercado Envios Full e a ausência de investimento em Product Ads significam que não há alavancas de tração ativas, resultando em uma presença irrelevante nas buscas do Mercado Livre.', challenge: 'Criar e executar um plano de ativação acelerada para o crescimento. Isso inclui maximizar o uso do Mercado Envios Full enviando mais produtos, iniciar campanhas de Product Ads para aumentar a visibilidade e o tráfego, e otimizar o conteúdo dos anúncios para melhorar a conversão e a relevância nas buscas.' }, { id: '10', title: '⭐ Cenário 10 – Produtos personalizados sob demanda', data: { personalizedProduct: personalizedProducts[getRandomInt(0, personalizedProducts.length - 1)], faturamentoAtual: getRandomInt(ranges.personalizadoFaturamentoMin, ranges.personalizadoFaturamentoMax) * 1000, prazoDespacho: getRandomInt(ranges.personalizadoPrazoMin, ranges.personalizadoPrazoMax), }, summary: '', kpis: [], charts: [], problem: 'O crescimento da operação é limitado pelo tempo de produção dos itens personalizados e pela sobrecarga do atendimento ao cliente, que é manual e lida com um alto volume de perguntas pré-venda. A natureza do produto impede o uso do Mercado Envios Full, gerando desafios adicionais de reputação relacionados a prazos e comunicação.', challenge: 'Escalar a operação sem comprometer a qualidade dos produtos personalizados. Isso exige otimizar o processo de personalização para reduzir o tempo de produção, automatizar e aprimorar o atendimento ao cliente (SAC) para lidar com o volume de perguntas, e desenvolver estratégias de marketing que considerem as particularidades do produto sob demanda.' }];
-        
-        scenarios.forEach(scenario => {
-            switch (scenario.id) {
-                case '1':
-                    scenario.summary = `Esta conta possui um faturamento atual de R$ ${scenario.data.faturamentoAtual.toLocaleString('pt-BR')} mil/mês e um portfólio de ${scenario.data.produtosCurvaA} produtos de Curva A, que são itens com alto volume de visita e boa margem. No entanto, apenas ${scenario.data.produtosAds} desses produtos estão sendo impulsionados via Product Ads, resultando em um Custo sobre Vendas (ACO) de ${scenario.data.aco}%. A conta está desbloqueada e não utiliza o Mercado Envios Full. A reputação é Verde Claro. Há um grande potencial de crescimento inexplorado devido à baixa visibilidade.`;
-                    scenario.kpis = [{ label: 'Faturamento Atual', value: `R$ ${scenario.data.faturamentoAtual} mil/mês`, color: 'text-emerald-400' }, { label: 'Produtos Curva A', value: `${scenario.data.produtosCurvaA} produtos`, color: 'text-violet-400' }, { label: 'Produtos em Ads', value: `${scenario.data.produtosAds} produtos`, color: 'text-orange-400' }, { label: 'ACO (Custo)', value: `${scenario.data.aco}%`, color: 'text-red-400' }];
-                    scenario.charts = [{ type: 'bar', id: 'chart1-ads-comparison', title: 'Produtos Curva A vs. Em Ads', data: { labels: ['Produtos Curva A', 'Produtos em Ads'], datasets: [{ label: 'Quantidade de Produtos', data: [scenario.data.produtosCurvaA, scenario.data.produtosAds], borderWidth: 0, borderRadius: 4 }] } }];
-                    break;
-                case '2':
-                    scenario.summary = `Esta conta sofreu uma queda de faturamento de R$ ${scenario.data.faturamentoAnterior.toLocaleString('pt-BR')}/mês para R$ ${scenario.data.faturamentoAtual.toLocaleString('pt-BR')}/mês. O índice de reclamações atingiu ${scenario.data.reclamacoes}%, superando o limite de 5% do Mercado Livre, o que resultou na perda do selo MercadoLíder Gold e na reputação amarela. O principal fator contribuinte é o atraso médio de ${scenario.data.atrasoDespacho} dias úteis no despacho dos produtos.`;
-                    scenario.kpis = [{ label: 'Faturamento Anterior', value: `R$ ${(scenario.data.faturamentoAnterior/1000).toLocaleString('pt-BR')}k/mês`, color: 'text-emerald-400' }, { label: 'Faturamento Atual', value: `R$ ${(scenario.data.faturamentoAtual/1000).toLocaleString('pt-BR')}k/mês`, color: 'text-red-400' }, { label: 'Índice de Reclamações', value: `${scenario.data.reclamacoes}%`, color: 'text-red-400' }, { label: 'Atraso Despacho', value: `${scenario.data.atrasoDespacho} dias`, color: 'text-orange-400' }];
-                    scenario.charts = [{ type: 'line', id: 'chart2-revenue-trend', title: 'Faturamento Mensal (Antes vs. Agora)', data: { labels: ['Faturamento Anterior', 'Faturamento Atual'], datasets: [{ label: 'Faturamento (R$)', data: [scenario.data.faturamentoAnterior, scenario.data.faturamentoAtual], fill: true, tension: 0.3 }] } }, { type: 'bar', id: 'chart2-complaints', title: 'Índice de Reclamações vs. Limite', data: { labels: ['Índice Atual', 'Limite ML'], datasets: [{ label: 'Porcentagem (%)', data: [scenario.data.reclamacoes, 5.0], borderWidth: 0, borderRadius: 4 }] } }];
-                    break;
-                case '3':
-                    scenario.summary = `Esta conta tem um faturamento altamente concentrado em um único SKU principal, que representa ${scenario.data.skuPercent}% do total. A cobertura de estoque para este produto é de apenas ${scenario.data.estoqueDias} dias, indicando um risco iminente de ruptura. Embora o catálogo total possua ${scenario.data.totalSkus} SKUs ativos, apenas o SKU principal está no Mercado Envios Full. A reputação da conta é Verde Escuro.`;
-                    scenario.kpis = [{ label: 'SKU Principal % Fat.', value: `${scenario.data.skuPercent}%`, color: 'text-red-400' }, { label: 'Estoque SKU Principal', value: `${scenario.data.estoqueDias} dias`, color: 'text-orange-400' }, { label: 'Total SKUs Ativos', value: `${scenario.data.totalSkus}`, color: 'text-violet-400' }, { label: 'SKU Principal no Full', value: 'Sim', color: 'text-emerald-400' }];
-                    scenario.charts = [{ type: 'doughnut', id: 'chart3-sku-dependency', title: 'Dependência de SKU Principal', data: { labels: ['SKU Principal', 'Outros SKUs'], datasets: [{ data: [scenario.data.skuPercent, 100 - scenario.data.skuPercent], borderWidth: 0, hoverOffset: 4 }] }, options: { cutout: '75%' } }];
-                    break;
-                case '4':
-                    scenario.data.meta = scenario.data.faturamentoAtual * 2;
-                    scenario.summary = `Esta conta possui um catálogo limitado de ${scenario.data.skus} SKUs ativos e um faturamento atual de R$ ${scenario.data.faturamentoAtual.toLocaleString('pt-BR')}/mês. A reputação é Verde Escuro, o que é positivo. No entanto, a conta não utiliza o Mercado Envios Full e não investe em Product Ads. O objetivo ambicioso é dobrar o faturamento em 90 dias, atingindo R$ ${scenario.data.meta.toLocaleString('pt-BR')}/mês.`;
-                    scenario.kpis = [{ label: 'Catálogo Ativo', value: `${scenario.data.skus} SKUs`, color: 'text-violet-400' }, { label: 'Faturamento Atual', value: `R$ ${(scenario.data.faturamentoAtual/1000).toLocaleString('pt-BR')}k`, color: 'text-emerald-400' }, { label: 'Meta (90 dias)', value: `R$ ${(scenario.data.meta/1000).toLocaleString('pt-BR')}k`, color: 'text-purple-400' }, { label: 'Uso de Full', value: 'Não', color: 'text-red-400' }];
-                    scenario.charts = [{ type: 'bar', id: 'chart4-revenue-goal', title: 'Faturamento Atual vs. Meta (90 dias)', data: { labels: ['Atual', 'Meta (90 dias)'], datasets: [{ label: 'Valor (R$)', data: [scenario.data.faturamentoAtual, scenario.data.meta], borderWidth: 0, borderRadius: 4 }] } }];
-                    break;
-                case '5':
-                    scenario.summary = `Esta conta tem como produto principal ${scenario.data.seasonalProduct.name}, resultando em um faturamento de R$ ${scenario.data.picoFaturamento.toLocaleString('pt-BR')}/mês no pico (${scenario.data.seasonalProduct.pico}) e uma queda drástica para R$ ${scenario.data.foraPicoFaturamento.toLocaleString('pt-BR')}/mês no restante do ano (${scenario.data.seasonalProduct.fora}). Isso gera um grande volume de estoque parado. A reputação da conta é estável.`;
-                    scenario.kpis = [{ label: `Pico (${scenario.data.seasonalProduct.pico})`, value: `R$ ${(scenario.data.picoFaturamento/1000).toLocaleString('pt-BR')}k`, color: 'text-emerald-400' }, { label: `Fora Pico (${scenario.data.seasonalProduct.fora})`, value: `R$ ${(scenario.data.foraPicoFaturamento/1000).toLocaleString('pt-BR')}k`, color: 'text-orange-400' }, { label: 'Estoque Parado', value: 'Alta de Risco', color: 'text-red-400' }];
-                    scenario.charts = [{ type: 'bar', id: 'chart5-seasonal-revenue', title: 'Faturamento em Períodos (Pico vs. Fora Pico)', data: { labels: ['Pico', 'Fora Pico'], datasets: [{ label: 'Faturamento Mensal (R$)', data: [scenario.data.picoFaturamento, scenario.data.foraPicoFaturamento], borderWidth: 0, borderRadius: 4 }] } }];
-                    break;
-                case '6':
-                    scenario.data.roasDisplay = `${scenario.data.roas}`;
-                    scenario.summary = `Esta conta fatura R$ ${scenario.data.faturamentoAtual.toLocaleString('pt-BR')}/mês e tem um investimento em Product Ads de apenas R$ ${scenario.data.adsInvest.toLocaleString('pt-BR')}/mês, com um ROAS de ${scenario.data.roasDisplay}. O catálogo possui ${scenario.data.totalSkus} SKUs, sendo ${scenario.data.curvaA} deles de Curva A. A conta não utiliza o Mercado Envios Full e tem uma reputação Verde Escuro.`;
-                    scenario.kpis = [{ label: 'Faturamento Atual', value: `R$ ${(scenario.data.faturamentoAtual/1000).toLocaleString('pt-BR')}k`, color: 'text-violet-400' }, { label: 'Investimento Ads', value: `R$ ${scenario.data.adsInvest}`, color: 'text-orange-400' }, { label: 'ROAS Atual', value: scenario.data.roasDisplay, color: 'text-emerald-400' }, { label: 'SKUs Curva A', value: `${scenario.data.curvaA}/${scenario.data.totalSkus}`, color: 'text-purple-400' }];
-                    scenario.charts = [{ type: 'bar', id: 'chart6-ads-roas', title: 'Investimento em Ads e ROAS', data: { labels: ['Invest. Ads (R$)', 'ROAS'], datasets: [{ label: 'Valor', data: [scenario.data.adsInvest, scenario.data.roas], borderWidth: 0, borderRadius: 4 }] } }];
-                    break;
-                case '7':
-                    scenario.summary = `Esta conta atua na categoria de ${['Eletrônicos', 'Casa e Decoração', 'Esportes e Fitness', 'Ferramentas'][getRandomInt(0, 3)]}, com um faturamento médio de R$ ${scenario.data.faturamentoMedio.toLocaleString('pt-BR')}/mês, que se mantém no mesmo patamar há ${scenario.data.mesesEstagnado} meses. A operação utiliza o Mercado Envios Full e investe de forma relevante em Product Ads. A reputação é Verde Escuro, indicando uma boa saúde operacional.`;
-                    scenario.kpis = [{ label: 'Faturamento Médio', value: `R$ ${(scenario.data.faturamentoMedio/1000).toLocaleString('pt-BR')}k`, color: 'text-violet-400' }, { label: 'Período Estagnado', value: `${scenario.data.mesesEstagnado} meses`, color: 'text-orange-400' }, { label: 'Uso de Full', value: 'Sim', color: 'text-emerald-400' }, { label: 'Ads', value: 'Relevante', color: 'text-emerald-400' }];
-                    scenario.charts = [{ type: 'line', id: 'chart7-revenue-plateau', title: 'Faturamento Mensal (Últimos Meses)', data: { labels: Array.from({ length: 6 }, (_, i) => `Mês ${i - 5}`), datasets: [{ label: 'Faturamento (R$)', data: Array.from({ length: 6 }, (_, i) => scenario.data.faturamentoMedio + getRandomInt(-10000, 10000)), fill: true, tension: 0.4 }] } }];
-                    break;
-                case '8':
-                    scenario.summary = `Esta conta fatura R$ ${scenario.data.faturamentoAtual.toLocaleString('pt-BR')}/mês e possui ${scenario.data.totalSkus} SKUs ativos, com produtos de boa qualidade e avaliações positivas. No entanto, suas vendas ocorrem predominantemente através de descontos agressivos, e a conta geralmente fica em ${scenario.data.posicaoBuybox}º lugar no Buybox. A reputação é Verde.`;
-                    scenario.kpis = [{ label: 'Faturamento Atual', value: `R$ ${(scenario.data.faturamentoAtual/1000).toLocaleString('pt-BR')}k`, color: 'text-violet-400' }, { label: 'Catálogo Ativo', value: `${scenario.data.totalSkus} SKUs`, color: 'text-emerald-400' }, { label: 'Posição Buybox', value: `${scenario.data.posicaoBuybox}º`, color: 'text-orange-400' }, { label: 'Modelo de Vendas', value: 'Queima de Preço', color: 'text-red-400' }];
-                    scenario.charts = [{ type: 'bar', id: 'chart8-buybox-position', title: 'Posição Típica no Buybox', data: { labels: ['Posição Média'], datasets: [{ label: 'Posição (1 = Melhor)', data: [scenario.data.posicaoBuybox], borderWidth: 0, borderRadius: 4 }] }, options: { scales: { y: { reverse: true } } } }];
-                    break;
-                case '9':
-                    scenario.summary = `Esta é uma conta embrionária com faturamento atual de R$ ${scenario.data.faturamentoAtual.toLocaleString('pt-BR')}/mês e ${scenario.data.skus} SKUs no catálogo. O Mercado Envios Full foi ativado recentemente, mas apenas ${scenario.data.fullProducts} produtos foram enviados. A conta ainda não iniciou investimentos em Product Ads. A reputação é Verde Claro, indicando um bom ponto de partida.`;
-                    scenario.kpis = [{ label: 'Faturamento Atual', value: `R$ ${(scenario.data.faturamentoAtual/1000).toLocaleString('pt-BR')}k`, color: 'text-violet-400' }, { label: 'Catálogo Ativo', value: `${scenario.data.skus} SKUs`, color: 'text-emerald-400' }, { label: 'No Full', value: `${scenario.data.fullProducts} produtos`, color: 'text-orange-400' }, { label: 'Ads Ativos', value: 'Não', color: 'text-red-400' }];
-                    scenario.charts = [{ type: 'doughnut', id: 'chart9-full-usage', title: 'Produtos no Full vs Fora', data: { labels: ['No Full', 'Fora do Full'], datasets: [{ data: [scenario.data.fullProducts, scenario.data.skus - scenario.data.fullProducts], borderWidth: 0, hoverOffset: 4 }] }, options: { cutout: '75%' } }];
-                    break;
-                case '10':
-                    scenario.summary = `Esta conta fatura R$ ${scenario.data.faturamentoAtual.toLocaleString('pt-BR')}/mês com ${scenario.data.personalizedProduct}. O prazo médio de despacho é de ${scenario.data.prazoDespacho} a ${scenario.data.prazoDespacho + 2} dias, e o SAC é manual, com alto volume de perguntas pré-venda. O Mercado Envios Full não está disponível para este tipo de produto.`;
-                    scenario.kpis = [{ label: 'Faturamento Atual', value: `R$ ${(scenario.data.faturamentoAtual/1000).toLocaleString('pt-BR')}k`, color: 'text-violet-400' }, { label: 'Prazo Despacho', value: `${scenario.data.prazoDespacho} a ${scenario.data.prazoDespacho + 2} dias`, color: 'text-orange-400' }, { label: 'SAC', value: 'Alto Volume', color: 'text-red-400' }, { label: 'Full', value: 'Incompatível', color: 'text-gray-400' }];
-                    scenario.charts = [{ type: 'bar', id: 'chart10-dispatch-time', title: 'Prazo Médio de Despacho (Dias)', data: { labels: ['Prazo de Despacho'], datasets: [{ label: 'Dias Úteis', data: [scenario.data.prazoDespacho], borderWidth: 0, borderRadius: 4 }] } }];
-                    break;
-            }
-        });
-        return scenarios;
-    }
-
     let activeCharts = {};
-    let currentScenarios = [];
+    let currentScenarioData = null;
 
-    // Função de renderização (Arquitetura Dark Elite & Gradients Mamba)
+    // Vocabulário dinâmico baseado no nicho
+    const nicheContexts = {
+        'Casa e Decoração': {
+            prodHigh: 'jogos de cama premium e móveis',
+            prodLow: 'pequenos itens decorativos e almofadas',
+            sazonal: 'tapetes pesados e cobertores térmicos',
+            termo: 'decoração',
+        },
+        'Eletrônicos': {
+            prodHigh: 'smartwatches e fones de alto padrão',
+            prodLow: 'cabos USB e cases para celular',
+            sazonal: 'caixas de som potentes (verão)',
+            termo: 'eletrônicos e gadgets',
+        },
+        'Moda': {
+            prodHigh: 'jaquetas de couro e vestidos de festa',
+            prodLow: 'camisetas básicas e meias',
+            sazonal: 'coleção de moda praia/biquínis',
+            termo: 'peças de vestuário',
+        },
+        'Pet': {
+            prodHigh: 'arranhadores gigantes e ração super premium',
+            prodLow: 'tapetes higiênicos e brinquedos simples',
+            sazonal: 'caminhas aquecidas de inverno',
+            termo: 'suprimentos pet',
+        },
+        'Beleza e Cuidado Pessoal': {
+            prodHigh: 'kits completos de skincare avançado',
+            prodLow: 'sabonetes unitários e esponjas',
+            sazonal: 'kits de protetor solar e bronzeador',
+            termo: 'cosméticos',
+        },
+        'Autopeças': {
+            prodHigh: 'kits completos de embreagem e multimídia',
+            prodLow: 'lâmpadas, aditivos e filtros',
+            sazonal: 'bagageiros de teto para férias',
+            termo: 'reposição automotiva',
+        }
+    };
+
+    function generateSpecificScenario(scenarioId, nicheName) {
+        const ctx = nicheContexts[nicheName];
+        
+        const dadosConta = {
+            faturamento: 'R$ 3.827.550',
+            quedaFaturamento: '-33,6%',
+            ticketAtual: 'R$ 304,33',
+            quedaTicket: '-31%',
+            visitas: '847.623',
+            quedaVisitas: '-14,1%',
+            conversao: '1,4%',
+            recompra: '13%',
+            vendasVol: '11.421 (-2,4%)'
+        };
+
+        let scenario = {
+            id: scenarioId,
+            niche: nicheName,
+            title: '',
+            summary: '',
+            kpis: [],
+            charts: [],
+            problem: '',
+            challenge: ''
+        };
+
+        // Kpis base
+        const defaultKpis = [
+            { label: 'Receita Operacional', value: dadosConta.faturamento, class: 'text-mamba-text-main glow-null border-l-2 border-l-gray-500' },
+            { label: 'Desvio de Receita', value: dadosConta.quedaFaturamento, class: 'text-mamba-pink glow-pink' },
+            { label: 'Variação Ticket Médio', value: dadosConta.quedaTicket, class: 'text-mamba-pink glow-pink' },
+            { label: 'Índice de Retenção', value: dadosConta.recompra, class: 'text-mamba-purple glow-purple' }
+        ];
+
+        switch (scenarioId) {
+            case '1':
+                scenario.title = 'Ads Desligado no High Ticket';
+                scenario.summary = `Telemetria revela que a conta faturou ${dadosConta.faturamento}, registrando um recuo de 33,6% na receita. A causa matriz não foi conversão (que escalou para 1,4%), mas o corte de investimento em Ads para a linha premium de ${nicheName}.`;
+                scenario.problem = `O lojista cortou o orçamento do Product Ads para itens de alto valor agregado (${ctx.prodHigh}), reduzindo as visitas topo de funil em 14,1%. A conversão em volume (-2,4%) foi sustentada pelos itens de entrada (${ctx.prodLow}), o que afundou o Ticket Médio em 31% (para R$ 304), destruindo o volume financeiro bruto.`;
+                scenario.challenge = `Reativar o tráfego de alta intenção com foco total na recuperação de Ticket. O Heatmap mapeia segundas (12h-18h) como o pico absoluto de conversão. Injetaremos o budget do Product Ads do High Ticket nesta janela exata, além de automatizar retargeting focado nos 7.527 novos usuários adquiridos no mês.`;
+                scenario.kpis = defaultKpis;
+                scenario.charts = [{
+                    type: 'bar', id: 'c1', title: 'Impacto do Corte Ads: Ticket vs Volume Demanda',
+                    data: { labels: ['Retração de Ticket Médio', 'Retração de Volume Bruto'], datasets: [{ label: 'Variação %', data: [-31, -2.4], backgroundColor: [eliteColors.pink, eliteColors.blue] }] }
+                }];
+                break;
+
+            case '2':
+                scenario.title = 'Colapso Logístico e Quebra de Preço';
+                scenario.summary = `Operação de ${nicheName} em estado crítico de sangria (Receita: ${dadosConta.faturamento} | -33,6%). A queda vertiginosa não reflete sazonalidade, mas sim as consequências em cascata de uma perda recente do selo MercadoLíder.`;
+                scenario.problem = `A remoção do selo cortou a indexação orgânica, retraindo visitas em 14,1%. Para não estagnar o galpão, a diretoria esmagou o próprio markup em 31% (Ticket atual: R$ 304,33). Essa manobra suicida preservou a saída de caixas (-2,4% vol.), mas desintegrou a rentabilidade geral de ${ctx.termo}.`;
+                scenario.challenge = `Estancar a erosão da margem e blindar o fluxo logístico. Aplicaremos campanhas exclusivas na base de clientes frequentes (13%) ofertando bundles (${ctx.prodLow} + ${ctx.prodHigh}) para restaurar o Ticket Médio imediato. Estruturaremos também o escoamento logístico focado nas segundas-feiras, isolando o gargalo operacional visto no mapa de calor.`;
+                scenario.kpis = defaultKpis;
+                scenario.charts = [{
+                    type: 'line', id: 'c2', title: 'Degradação Acelerada do Ticket Médio',
+                    data: { labels: ['Semana -3', 'Semana -2', 'Evento (Perda Selo)', 'Momento Atual'], datasets: [{ label: 'Preço Praticado (R$)', data: [441, 435, 340, 304], borderColor: eliteColors.pink, tension: 0.3 }] }
+                }];
+                break;
+
+            case '3':
+                scenario.title = 'Ruptura da Curva A (Dependência)';
+                scenario.summary = `As métricas ilustram o sintoma clássico do 'Lojista Refém' em ${nicheName}. O faturamento regrediu severos 33,6% (R$ 3.8M), causado puramente pelo desabastecimento da SKU matriz de alto ticket.`;
+                scenario.problem = `O principal ${ctx.prodHigh} da loja sofreu ruptura de estoque. Sem o "Herói", os anúncios pausaram, eliminando 14,1% do tráfego. O algoritmo de recomendação desviou os usuários para os itens secundários (${ctx.prodLow}). A base comprou (queda de só -2,4% em vol.), mas o Ticket colapsou (-31%).`;
+                scenario.challenge = `Pivotagem arquitetural do catálogo. Com uma conversão residual alta (1,4%), utilizaremos táticas de multi-compra (Leve 3, Pague 2) na Curva B de ${ctx.termo} para mimetizar o faturamento perdido. Paralelamente, estrutura-se um plano preditivo de ressuprimento para blindar o SKU matriz contra quebras futuras.`;
+                scenario.kpis = defaultKpis;
+                scenario.charts = [{
+                    type: 'doughnut', id: 'c3', title: 'Diluição do Mix de Produtos',
+                    data: { labels: ['Demanda do Herói (Desabastecido)', 'Curva B (Sustentação)'], datasets: [{ data: [31, 69], backgroundColor: ['#333333', eliteColors.purple] }] }
+                }];
+                break;
+
+            case '4':
+                scenario.title = 'Falha no Custo de Aquisição (CAC)';
+                scenario.summary = `Operação madura em ${nicheName} gerando R$ 3.8M, porém em retração financeira de 33,6%. O board busca escala puramente por novos clientes, ignorando a falha arquitetural de retenção (LTV).`;
+                scenario.problem = `A injeção de Ads focou exclusivamente na venda do item de entrada (${ctx.prodLow}), trazendo 7.527 novos compradores. Porém, sem o funil de Up-Sell, o Ticket cedeu 31%. O "balde furado" é evidente: a taxa de recompra agoniza em parcos 13%. Volume existe, margem residual e LTV são nulos.`;
+                scenario.challenge = `Arquitetar ecossistema de retenção. Executaremos fluxos automatizados no Mercado Shops e Cupons diretos focados nos +7k leads gerados. O tráfego pago da segunda-feira à tarde (Peak Time) será reorientado 100% para os itens premium, reconstruindo o Ticket Médio sem onerar a aquisição.`;
+                scenario.kpis = defaultKpis;
+                scenario.charts = [{
+                    type: 'doughnut', id: 'c4', title: 'Fenda de Retenção (LTV)',
+                    data: { labels: ['New Users (Altíssimo Fricção)', 'Returning (Baixo Aproveitamento)'], datasets: [{ data: [87, 13], backgroundColor: [eliteColors.blue, eliteColors.purple] }] }
+                }];
+                break;
+
+            case '5':
+                scenario.title = 'Vale Sazonal e Estoque Comoditizado';
+                scenario.summary = `Os data points atestam a violenta descompressão de temporada em ${nicheName}. O recuo de 33,6% na receita acompanha o esgotamento do ciclo orgânico sazonal, demandando intervenção tática no catálogo periférico.`;
+                scenario.problem = `Itens de alto ticket (${ctx.sazonal}) perderam demanda primária, suprimindo as buscas em 14,1%. A demanda remanescente fluiu para o portfólio de acessórios (${ctx.prodLow}). A conversão segue firme em 1,4%, indicando que a loja tem tráfego, porém o desabamento do ticket (-31%) sangra o resultado geral.`;
+                scenario.challenge = `Neutralizar a volatilidade sazonal. Estruturaremos "Kits de Transição", empacotando produtos perenes para sustentar o ticket acima de R$ 400. Injeção de Product Ads será cirúrgica no pico do Heatmap (Seg/Ter) para tracionar produtos de contraciclo na base já existente.`;
+                scenario.kpis = defaultKpis;
+                scenario.charts = [{
+                    type: 'bar', id: 'c5', title: 'Efeito Sazonalidade no Preço Base',
+                    data: { labels: ['Ticket Alta Estação', 'Ticket Vale Sazonal'], datasets: [{ label: 'Preço Praticado (R$)', data: [441, 304], backgroundColor: [eliteColors.blue, eliteColors.pink] }] }
+                }];
+                break;
+
+            case '6':
+                scenario.title = 'Canibalização Orgânica por Preço';
+                scenario.summary = `Análise forense da conta de ${nicheName} revela autossabotagem sistêmica. Frente à concorrência agressiva, o lojista abriu mão da rentabilidade operacional para manter artificialmente o ranqueamento no marketplace.`;
+                scenario.problem = `Após uma queda natural de 14,1% no tráfego, o lojista entrou em pânico e derreteu o pricing do catálogo premium em 31%. Essa tática kamikaze mascarou a queda de volume (-2,4% apenas) e maquiou a conversão (1,4%), porém resultou na pulverização de 33,6% do Faturamento Bruto (R$ 3.8M).`;
+                scenario.challenge = `Arquitetura de 'Pricing Authority'. Congelaremos descontos predatórios em ${ctx.termo}. Ao invés de subsidiar o mercado, o budget de margem sacrificada será alocado em Product Ads nos slots vitais (Segundas 12h-18h), criando demanda própria e permitindo o reposicionamento imediato de valor.`;
+                scenario.kpis = defaultKpis;
+                scenario.charts = [{
+                    type: 'line', id: 'c6', title: 'Curva Kamikaze: Subtração de Valor',
+                    data: { labels: ['Q1', 'Q2', 'Q3 (Início Guerra)', 'Status Atual'], datasets: [{ label: 'Desvalorização do Catálogo (%)', data: [0, -10, -25, -31], borderColor: eliteColors.pink, tension: 0.1 }] }
+                }];
+                break;
+
+            case '7':
+                scenario.title = 'Platô e Morte de Ciclo (Commodity)';
+                scenario.summary = `A assinatura dos dados aponta para fadiga crônica de produto no nicho de ${nicheName}. Uma operação que movimentava volumes superiores hoje definha em R$ 3.8M (-33,6%), presa a um catálogo que perdeu seu 'Edge' de mercado.`;
+                scenario.problem = `A base principal de produtos sofreu comoditização severa pela concorrência. Para sustentar o escoamento logístico (-2,4% em volume), a conta forçou a precificação para baixo, consolidando um Ticket Médio pobre (R$ 304 | -31%). A loja tornou-se um mero centro de distribuição focado em briga de centavos.`;
+                scenario.challenge = `Injeção emergencial de Inovação de Curva A. Com parcos 13% de fidelização (recompra), a operação precisa apresentar novidade aos 7.5k novos leads que passam ali todo mês. Lançaremos linhas premium de ${ctx.prodHigh} com blindagem via catálogo de Ads, restaurando o LTV da base legada.`;
+                scenario.kpis = defaultKpis;
+                scenario.charts = [{
+                    type: 'doughnut', id: 'c7', title: 'Saturação de Mix (Commoditization)',
+                    data: { labels: ['Commodities (Volume Sanguessuga)', 'Itens Diferenciados (Margem Real)'], datasets: [{ data: [85, 15], backgroundColor: [eliteColors.pink, eliteColors.blue] }] }
+                }];
+                break;
+
+            case '8':
+                scenario.title = 'A Armadilha Estática do BuyBox';
+                scenario.summary = `Leitura de dados revela a "Falácia do Volume" na operação de ${nicheName}. O investidor que analisar apenas as 11.421 unidades vendidas ignorará o rombo financeiro: a receita caiu 33,6% por vício tático no motor de BuyBox do marketplace.`;
+                scenario.problem = `A operação condicionou-se a vencer a BuyBox via destruição de margem em vez de composição de oferta. O Ticket cedeu 31%, e embora a taxa de conversão pareça atrativa (1,4%), o CAC somado à perda de margem de ${ctx.prodLow} coloca o P&L da empresa no vermelho sistêmico.`;
+                scenario.challenge = `Refatoração total do formato de oferta. Desconectaremos as SKUs principais da briga de BuyBox direta via criação de Bundles (kits exclusivos de valor agregado alto). A verba recuperada de margem financiará Product Ads hiper-focado nas Segundas, garantindo tração orgânica primária e sustentável.`;
+                scenario.kpis = defaultKpis;
+                scenario.charts = [{
+                    type: 'bar', id: 'c8', title: 'Ilusão de Escala: Receita Ponderada',
+                    data: { labels: ['Sangria de Receita Bruta (%)', 'Desgaste Unitário (Irrelevante)'], datasets: [{ label: 'Queda Registrada', data: [-33.6, -2.4], backgroundColor: [eliteColors.pink, eliteColors.purple] }] }
+                }];
+                break;
+
+            case '9':
+                scenario.title = 'Assimetria Logística no Mercado Envios Full';
+                scenario.summary = `Identificamos uma infração severa na alocação de ativos em ${nicheName}. A retração de 33,6% do faturamento deve-se a um erro de arquitetura na seleção da grade enviada aos Fulfillment Centers do ecossistema ML.`;
+                scenario.problem = `Com aversão ao custo de armazenagem, a diretoria despachou exclusivamente SKUs de altíssimo giro e baixo ticket (${ctx.prodLow}) para o Full. A tração do "Chega Amanhã" forçou a conversão em 1,4% para estes itens, enquanto a linha premium estacionou no Cross-Docking local. Consequência: Ticket desmorona 31%.`;
+                scenario.challenge = `Reversão imediata do algoritmo logístico. Realocaremos a Curva A de ${ctx.prodHigh} para os CDs principais, integrando campanhas de Ads pesadas. Essa fusão (Ads + Frete Rápido em itens caros) fará o Ticket saltar para além dos R$ 450, absorvendo com facilidade eventuais custos de estocagem.`;
+                scenario.kpis = defaultKpis;
+                scenario.charts = [{
+                    type: 'doughnut', id: 'c9', title: 'Falha de Alocação de Ativos (Full)',
+                    data: { labels: ['SKUs de Entrada (Full)', 'SKUs Premium (Retidos na Origem)'], datasets: [{ data: [90, 10], backgroundColor: [eliteColors.purple, eliteColors.pink] }] }
+                }];
+                break;
+
+            case '10':
+                scenario.title = 'Colapso Produtivo na Linha Premium';
+                scenario.summary = `Os gráficos funcionam como um 'Raio-X' de gargalo de Supply Chain na fábrica de ${nicheName}. A perda abrupta de 33,6% em receita não derivou do algoritmo, mas de incapacidade fabril em atender a linha de alto padrão.`;
+                scenario.problem = `Atrasos e quebras operacionais paralisaram a oferta de kits high-end e personalizados (${ctx.termo}). Sem inventário premium, o Ads foi cortado (-14,1% visitas). O fluxo remanescente adquiriu produtos básicos de prateleira (-2,4% de queda em vol.), forçando o Ticket Médio global a cair R$ 137 reais (-31%).`;
+                scenario.challenge = `Desenvolvimento de 'Waitlist' e reaquecimento da base. Capitalizaremos em cima dos 7.527 novos clientes atraídos pelos itens de entrada. Estruturaremos comunicação B2B focada no cross-selling de upgrades, enquanto adequamos o Product Ads para explodir as vendas assim que a linha premium normalizar a produção.`;
+                scenario.kpis = defaultKpis;
+                scenario.charts = [{
+                    type: 'bar', id: 'c10', title: 'Impacto Direto do Gargalo no LTV',
+                    data: { labels: ['Preço Médio Estrutural', 'Preço Médio Deficitário (Atual)'], datasets: [{ label: 'Cotação do Ticket (R$)', data: [441, 304], backgroundColor: [eliteColors.blue, eliteColors.pink] }] }
+                }];
+                break;
+        }
+
+        return scenario;
+    }
+
     function renderScenario(scenario) {
+        document.getElementById('error-message').classList.add('hidden');
+        
         const briefingSection = document.getElementById('scenario-briefing');
+        const badgeNicho = document.getElementById('badge-nicho');
         const briefingTitle = document.getElementById('briefing-title');
         const briefingSummary = document.getElementById('briefing-summary');
         const kpiCardsContainer = document.getElementById('kpi-cards');
         const chartsContainer = document.getElementById('charts-container');
         const briefingProblem = document.getElementById('briefing-problem');
         const briefingChallenge = document.getElementById('briefing-challenge');
-        const exportPdfBtn = document.getElementById('export-pdf-btn');
         
-        // Revelação suave
-        briefingSection.classList.remove('hidden');
-        setTimeout(() => briefingSection.classList.remove('opacity-0'), 50);
-        
-        briefingTitle.textContent = scenario.title.replace('⭐ ', '');
-        briefingSummary.textContent = scenario.summary;
+        badgeNicho.textContent = scenario.niche;
+        briefingTitle.textContent = scenario.title;
+        briefingSummary.innerHTML = `<span class="text-white font-semibold">Resumo Executivo:</span> <span class="text-gray-400">${scenario.summary}</span>`;
         briefingProblem.textContent = scenario.problem;
         briefingChallenge.textContent = scenario.challenge;
         
         kpiCardsContainer.innerHTML = '';
         scenario.kpis.forEach(kpi => {
-            const hexColor = tailwindColorMap[kpi.color] || '#ffffff';
             const kpiCard = document.createElement('div');
-            // Estrutura Glassmorphism para KPI
-            kpiCard.className = 'glass-panel p-4 flex flex-col justify-center border-t-0 border-l-0 border-r-0 border-b-2 hover:-translate-y-1 transition-transform';
-            kpiCard.style.borderBottomColor = hexColor;
-            
+            kpiCard.className = `kpi-card ${kpi.class.split('glow')[1] ? 'glow-' + kpi.class.split('glow-')[1].split(' ')[0] : ''}`;
             kpiCard.innerHTML = `
-                <span class="font-display text-[10px] text-mamba-text-sec uppercase tracking-widest mb-1">${kpi.label}</span>
-                <span class="font-display text-2xl font-black" style="color: ${hexColor}; text-shadow: 0 0 10px ${hexColor}80">${kpi.value}</span>
+                <h4 class="text-[10px] sm:text-xs font-semibold text-mamba-sec uppercase tracking-widest mb-2">${kpi.label}</h4>
+                <p class="text-xl sm:text-2xl font-bold montserrat ${kpi.class.split(' ')[0]}">${kpi.value}</p>
             `;
             kpiCardsContainer.appendChild(kpiCard);
         });
+        
+        const globalCharts = [
+            ...scenario.charts,
+            {
+                type: 'bar', id: 'heatmap_sim', title: 'Ondas de Demanda (Map. Calor Extraído)',
+                data: { labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'], datasets: [{ label: 'Índice de Tráfego Convergido', data: [100, 85, 80, 75, 60, 40, 50], backgroundColor: eliteColors.blue }] }
+            }
+        ];
 
         chartsContainer.innerHTML = '';
         for (const chartId in activeCharts) {
@@ -414,248 +551,173 @@
         }
         activeCharts = {};
 
-        scenario.charts.forEach(chartInfo => {
+        globalCharts.forEach(chartInfo => {
             const chartDiv = document.createElement('div');
-            // Container minimalista do gráfico
-            chartDiv.className = 'glass-panel p-5 flex flex-col h-[280px] md:h-[320px] relative';
+            chartDiv.className = 'glass-panel p-5 h-[320px] flex flex-col justify-between';
             chartDiv.innerHTML = `
-                <h4 class="font-display text-xs font-bold text-white uppercase tracking-widest mb-4 text-center opacity-80">${chartInfo.title}</h4>
-                <div class="relative w-full flex-grow"><canvas id="${chartInfo.id}"></canvas></div>
+                <h4 class="montserrat text-xs uppercase tracking-widest text-white mb-2">${chartInfo.title}</h4>
+                <div class="relative w-full h-[240px]">
+                    <canvas id="${chartInfo.id}"></canvas>
+                </div>
             `;
             chartsContainer.appendChild(chartDiv);
             
             setTimeout(() => {
                 const ctx = document.getElementById(chartInfo.id)?.getContext('2d');
                 if (ctx) {
-                    
-                    // --- MAMBA DESIGN ARCHITECT: GERADOR DE DEGRADÊS ---
-                    const mambaGradient = ctx.createLinearGradient(0, 0, 0, 300);
-                    mambaGradient.addColorStop(0, '#7c3aed'); // Purple
-                    mambaGradient.addColorStop(1, '#2563eb'); // Blue
-
-                    const alertGradient = ctx.createLinearGradient(0, 0, 0, 300);
-                    alertGradient.addColorStop(0, '#ff4d8d'); // Pink
-                    alertGradient.addColorStop(1, '#9f1239'); // Dark Red
-
-                    const bgGradientLine = ctx.createLinearGradient(0, 0, 0, 300);
-                    bgGradientLine.addColorStop(0, 'rgba(124, 58, 237, 0.5)');
-                    bgGradientLine.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
-
-                    // Aplicando Cores aos datasets
-                    chartInfo.data.datasets.forEach((dataset, index) => {
-                        if (chartInfo.type === 'doughnut') {
-                            dataset.backgroundColor = [mambaGradient, 'rgba(255, 255, 255, 0.05)'];
-                            dataset.borderColor = ['#050505', '#050505'];
-                        } else if (chartInfo.type === 'line') {
-                            dataset.backgroundColor = bgGradientLine;
-                            dataset.borderColor = '#7c3aed';
-                            dataset.pointBackgroundColor = '#2563eb';
-                            dataset.pointBorderColor = '#fff';
-                        } else {
-                            // Bar charts
-                            dataset.backgroundColor = index === 0 ? mambaGradient : alertGradient;
-                        }
-                    });
-
-                    // Opções Minimalistas
-                    const defaultOptions = {
-                        responsive: true,
-                        maintainAspectRatio: false,
+                    const chartOptions = {
+                        responsive: true, maintainAspectRatio: false,
                         plugins: {
-                            legend: {
-                                display: true,
-                                labels: { color: '#9ca3af', font: { family: "'Inter', sans-serif", size: 11 }, usePointStyle: true, boxWidth: 8 }
-                            },
+                            legend: { display: true, labels: { color: eliteColors.textSec, font: {family: 'Inter', size: 10} } },
                         },
-                        scales: {
-                            y: {
-                                border: { display: false },
-                                ticks: { color: '#9ca3af', font: { family: "'Inter', sans-serif", size: 10 } },
-                                grid: { color: 'rgba(255,255,255,0.05)', tickLength: 0 }
-                            },
-                            x: {
-                                border: { display: false },
-                                ticks: { color: '#9ca3af', font: { family: "'Inter', sans-serif", size: 10 } },
-                                grid: { color: 'transparent', tickLength: 0 }
-                            }
-                        }
+                        scales: chartInfo.type !== 'doughnut' ? {
+                            y: { ticks: { color: eliteColors.textSec, font: {size: 10} }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                            x: { ticks: { color: eliteColors.textSec, font: {size: 10} }, grid: { display: false } }
+                        } : {}
                     };
-
-                    const finalOptions = { ...defaultOptions };
                     
-                    // Merge profundo simples para Scales
-                    if (chartInfo.options && chartInfo.options.scales) {
-                        if(chartInfo.options.scales.y) Object.assign(finalOptions.scales.y, chartInfo.options.scales.y);
-                        if(chartInfo.options.scales.x) Object.assign(finalOptions.scales.x, chartInfo.options.scales.x);
-                    }
-
-                    if (chartInfo.type === 'doughnut') {
-                        finalOptions.plugins.legend.position = 'bottom';
-                        delete finalOptions.scales;
-                        if(chartInfo.options && chartInfo.options.cutout) finalOptions.cutout = chartInfo.options.cutout;
-                    }
-
-                    activeCharts[chartInfo.id] = new Chart(ctx, {
-                        type: chartInfo.type,
-                        data: chartInfo.data,
-                        options: finalOptions
-                    });
+                    activeCharts[chartInfo.id] = new Chart(ctx, { type: chartInfo.type, data: chartInfo.data, options: chartOptions });
                 }
             }, 0);
         });
 
-        exportPdfBtn.classList.remove('hidden');
-    }
-
-    function populateScenarioDropdown(scenariosToPopulate) {
-        const selectElement = document.getElementById('scenario-select');
-        scenariosToPopulate.forEach(scenario => {
-            const option = document.createElement('option');
-            option.value = scenario.id;
-            option.textContent = scenario.title.replace('⭐ ', '');
-            option.className = "bg-mamba-bg text-white";
-            selectElement.appendChild(option);
-        });
-        document.getElementById('scenario-briefing').classList.add('opacity-0');
-        setTimeout(() => { document.getElementById('scenario-briefing').classList.add('hidden'); }, 500);
-        document.getElementById('export-pdf-btn').classList.add('hidden');
+        briefingSection.classList.remove('hidden');
+        briefingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        const selectElement = document.getElementById('scenario-select');
+        const btnGenerate = document.getElementById('btn-generate');
         const exportPdfBtn = document.getElementById('export-pdf-btn');
+        const errorMessage = document.getElementById('error-message');
 
-        currentScenarios = generateRandomScenarios();
-        populateScenarioDropdown(currentScenarios);
+        btnGenerate.addEventListener('click', function() {
+            const nicho = document.getElementById('select-nicho').value;
+            const scenarioId = document.getElementById('scenario-select').value;
 
-        selectElement.addEventListener('change', function() {
-            const selectedId = this.value;
-            const scenario = currentScenarios.find(s => s.id === selectedId);
-            if (scenario) {
-                renderScenario(scenario);
-            } else {
-                const briefingSection = document.getElementById('scenario-briefing');
-                briefingSection.classList.add('opacity-0');
-                setTimeout(() => { briefingSection.classList.add('hidden'); }, 500);
-                exportPdfBtn.classList.add('hidden');
-                for (const chartId in activeCharts) {
-                    if (activeCharts[chartId]) activeCharts[chartId].destroy();
-                }
-                activeCharts = {};
+            if (!nicho || !scenarioId) {
+                errorMessage.classList.remove('hidden');
+                return;
             }
+
+            currentScenarioData = generateSpecificScenario(scenarioId, nicho);
+            renderScenario(currentScenarioData);
         });
 
-        // LÓGICA DE EXPORTAÇÃO DE PDF MANTIDA EXATAMENTE IGUAL, COM CORES DARK ELITE
+        // --- EXPORTAÇÃO PDF ELITE ---
         exportPdfBtn.addEventListener('click', async () => {
-            const selectedId = selectElement.value;
-            const scenario = currentScenarios.find(s => s.id === selectedId);
-            if (!scenario) return;
+            if (!currentScenarioData) return;
 
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
-
             const PAGE_WIDTH = doc.internal.pageSize.getWidth();
             const PAGE_HEIGHT = doc.internal.pageSize.getHeight();
             const MARGIN = 15;
             const CONTENT_WIDTH = PAGE_WIDTH - (MARGIN * 2);
-            let y = MARGIN;
+            let y = MARGIN; 
+
+            // Dark Mode Background
+            doc.setFillColor(5, 5, 5); // #050505
+            doc.rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, 'F');
 
             function drawSectionTitle(title, currentY) {
                 doc.setFont('helvetica', 'bold');
                 doc.setFontSize(12);
-                doc.setTextColor(tailwindColorMap['white']);
+                doc.setTextColor(37, 99, 235); // Blue
                 doc.text(title.toUpperCase(), MARGIN, currentY);
                 currentY += 2;
-                doc.setDrawColor('#2563eb'); // Mamba Blue
+                doc.setDrawColor(51, 51, 51); // Dark Gray border
                 doc.line(MARGIN, currentY, PAGE_WIDTH - MARGIN, currentY);
-                currentY += 8;
-                return currentY;
+                return currentY + 8;
             }
 
-            // FUNDO DARK ELITE
-            doc.setFillColor('#050505');
-            doc.rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, 'F');
+            // Header
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(9);
+            doc.setTextColor(156, 163, 175); // Gray
+            doc.text(`ARQUITETURA MAMBA DIGITAL - NICHO: ${currentScenarioData.niche.toUpperCase()}`, PAGE_WIDTH / 2, y, { align: 'center' });
+            y += 8;
 
-            // TÍTULO
+            // Title
             doc.setFont('helvetica', 'bold');
             doc.setFontSize(16);
-            doc.setTextColor('#ffffff');
-            const titleLines = doc.splitTextToSize(scenario.title.replace('⭐ ', '').toUpperCase(), CONTENT_WIDTH);
-            doc.text(titleLines, PAGE_WIDTH / 2, y + 5, { align: 'center' });
-            y += (titleLines.length * 6) + 10;
+            doc.setTextColor(255, 255, 255);
+            const titleLines = doc.splitTextToSize(currentScenarioData.title, CONTENT_WIDTH);
+            doc.text(titleLines, PAGE_WIDTH / 2, y, { align: 'center' });
+            y += (titleLines.length * 6) + 8;
 
-            // RESUMO
+            // Summary
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(10);
-            doc.setTextColor('#9ca3af');
-            const summaryLines = doc.splitTextToSize(scenario.summary, CONTENT_WIDTH);
+            doc.setTextColor(200, 200, 200);
+            const summaryLines = doc.splitTextToSize(currentScenarioData.summary, CONTENT_WIDTH);
             doc.text(summaryLines, MARGIN, y);
             y += (summaryLines.length * 4.5) + 10;
 
             // KPIs
-            y = drawSectionTitle('Métricas Primárias', y);
+            y = drawSectionTitle('Parâmetros Analíticos', y);
             doc.setFontSize(9);
             let kpiStartY = y;
-            scenario.kpis.forEach((kpi, index) => {
+            currentScenarioData.kpis.forEach((kpi, index) => {
                 const xPos = (index % 2 === 0) ? MARGIN : (PAGE_WIDTH / 2) + 5;
                 const yPos = kpiStartY + (Math.floor(index / 2) * 8);
-
                 doc.setFont('helvetica', 'bold');
-                doc.setTextColor('#ffffff');
-                const labelText = `${kpi.label.toUpperCase()}:`;
-                doc.text(labelText, xPos, yPos);
-
+                doc.setTextColor(255, 255, 255);
+                doc.text(`${kpi.label}:`, xPos, yPos);
                 doc.setFont('helvetica', 'normal');
-                doc.setTextColor(tailwindColorMap[kpi.color] || '#FFFFFF');
-                doc.text(kpi.value, xPos + doc.getTextWidth(labelText) + 2, yPos);
+                // Simula as cores elitizadas
+                if(kpi.class.includes('pink')) doc.setTextColor(255, 77, 141);
+                else if(kpi.class.includes('purple')) doc.setTextColor(124, 58, 237);
+                else doc.setTextColor(255, 255, 255);
                 
-                if (index === scenario.kpis.length - 1) y = yPos + 15;
+                doc.text(kpi.value, xPos + doc.getTextWidth(`${kpi.label}: `) + 1, yPos);
+                if (index === currentScenarioData.kpis.length - 1) y = yPos + 15;
             });
 
-            // GRÁFICOS
-            y = drawSectionTitle('Data Viz', y);
-            let chartPromises = scenario.charts.map(chartInfo => {
+            // Charts
+            y = drawSectionTitle('Visualização de Dados', y);
+            let chartPromises = currentScenarioData.charts.map(chartInfo => {
                 const canvas = document.getElementById(chartInfo.id);
                 activeCharts[chartInfo.id].options.animation = false;
                 activeCharts[chartInfo.id].update();
-                return html2canvas(canvas.parentElement, { backgroundColor: '#050505', scale: 3 }); 
+                return html2canvas(canvas.parentElement, { backgroundColor: '#111111', scale: 2 }); 
             });
 
             const chartCanvases = await Promise.all(chartPromises);
-
             chartCanvases.forEach((canvas, index) => {
-                const chartInfo = scenario.charts[index];
                 const imgData = canvas.toDataURL('image/png', 1.0);
                 const imgWidth = CONTENT_WIDTH;
                 const imgHeight = canvas.height * imgWidth / canvas.width;
 
-                doc.setFont('helvetica', 'bold');
-                doc.setFontSize(10);
-                doc.setTextColor('#ffffff');
-                doc.text(chartInfo.title.toUpperCase(), PAGE_WIDTH / 2, y, { align: 'center' });
-                y += 5;
-
-                if (y + imgHeight < PAGE_HEIGHT - MARGIN) {
-                    doc.addImage(imgData, 'PNG', MARGIN, y, imgWidth, imgHeight);
-                    y += imgHeight + 10;
+                if (y + imgHeight > PAGE_HEIGHT - MARGIN) {
+                    doc.addPage();
+                    doc.setFillColor(5, 5, 5); 
+                    doc.rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, 'F');
+                    y = MARGIN;
                 }
+                doc.addImage(imgData, 'PNG', MARGIN, y, imgWidth, imgHeight);
+                y += imgHeight + 10;
             });
 
+            // Text Blocks
             function drawTextBlock(title, text, currentY) {
-                if (currentY > PAGE_HEIGHT - 30) return currentY;
+                if (currentY > PAGE_HEIGHT - 35) {
+                    doc.addPage();
+                    doc.setFillColor(5, 5, 5); doc.rect(0, 0, PAGE_WIDTH, PAGE_HEIGHT, 'F');
+                    currentY = MARGIN;
+                }
                 currentY = drawSectionTitle(title, currentY);
                 doc.setFont('helvetica', 'normal');
                 doc.setFontSize(10);
-                doc.setTextColor('#9ca3af');
+                doc.setTextColor(200, 200, 200);
                 const textLines = doc.splitTextToSize(text, CONTENT_WIDTH);
                 doc.text(textLines, MARGIN, currentY);
-                return currentY + (textLines.length * 4.5) + 10;
+                return currentY + (textLines.length * 4.5) + 8;
             }
 
-            y = drawTextBlock('Diagnóstico / Problema', scenario.problem, y);
-            y = drawTextBlock('Objetivo / Desafio', scenario.challenge, y);
+            y = drawTextBlock('Diagnóstico Estrutural', currentScenarioData.problem, y);
+            y = drawTextBlock('Solução Arquitetural Mamba', currentScenarioData.challenge, y);
 
-            doc.save(`Mamba_Scenario_${scenario.id}.pdf`);
+            doc.save(`Mamba_Architecture_${currentScenarioData.niche.replace(/\s+/g, '')}.pdf`);
         });
     });
     </script>
